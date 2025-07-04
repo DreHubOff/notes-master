@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.MainApplicationTheme.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#FFFFFF</item>
+        <item name="postSplashScreenTheme">@style/Theme.MainApplicationTheme</item>
+    </style>
+
+    <style name="Theme.MainApplicationTheme" parent="Theme.AppCompat.DayNight.NoActionBar" />
+</resources>
