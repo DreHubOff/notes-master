@@ -37,7 +37,7 @@ import com.andres.notes.master.LocalThemeMode
 import com.andres.notes.master.ThemeMode
 import com.andres.notes.master.core.model.NoteColor
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.plusJakartaSans
+import com.andres.notes.master.ui.theme.WinkySansFontFamily
 
 @Composable
 fun ColorSelectorDialog(
@@ -76,7 +76,7 @@ fun ColorSelectorDialog(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 20.sp,
-                    fontFamily = plusJakartaSans,
+                    fontFamily = WinkySansFontFamily,
                 )
                 LazyVerticalGrid(
                     columns = GridCells.FixedSize(40.dp),

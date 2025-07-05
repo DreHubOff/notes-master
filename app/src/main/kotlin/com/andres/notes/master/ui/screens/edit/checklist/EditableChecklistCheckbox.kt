@@ -53,7 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.andres.notes.master.ui.focus.ElementFocusRequest
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.plusJakartaSans
+import com.andres.notes.master.ui.theme.WinkySansFontFamily
 import com.andres.notes.master.ui.theme.themedCheckboxColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -117,7 +117,7 @@ fun EditableChecklistCheckbox(
             lineHeight = 18.sp,
             letterSpacing = 0.sp,
             fontWeight = FontWeight.Normal,
-            fontFamily = plusJakartaSans,
+            fontFamily = WinkySansFontFamily,
             textDecoration = if (checked) TextDecoration.LineThrough else null,
         )
 

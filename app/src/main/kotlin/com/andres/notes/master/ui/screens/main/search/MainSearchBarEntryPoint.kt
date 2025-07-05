@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.sp
 import com.andres.notes.master.R
 import com.andres.notes.master.ui.shared.sharedBoundsTransition
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.plusJakartaSans
+import com.andres.notes.master.ui.theme.WinkySansFontFamily
 
 @Composable
 fun MainSearchBarEntryPoint(
@@ -89,7 +89,7 @@ fun MainSearchBarEntryPoint(
                         color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Medium,
-                        fontFamily = plusJakartaSans,
+                        fontFamily = WinkySansFontFamily,
                     )
                 }
             }

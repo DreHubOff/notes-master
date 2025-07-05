@@ -67,7 +67,7 @@ import com.andres.notes.master.ui.screens.edit.core.ReminderButton
 import com.andres.notes.master.ui.screens.edit.core.ReminderStateData
 import com.andres.notes.master.ui.shared.sharedElementTransition
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.plusJakartaSans
+import com.andres.notes.master.ui.theme.WinkySansFontFamily
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 import java.time.OffsetDateTime
@@ -315,7 +315,7 @@ private fun HideCheckedItemsButton(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontWeight = FontWeight.Normal,
                 fontSize = 15.5.sp,
-                fontFamily = plusJakartaSans,
+                fontFamily = WinkySansFontFamily,
             )
         }
     }
@@ -346,7 +346,7 @@ private fun AddItemButton(
                 text = stringResource(R.string.add_item),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontWeight = FontWeight.Normal,
-                fontFamily = plusJakartaSans,
+                fontFamily = WinkySansFontFamily,
                 fontSize = 15.5.sp
             )
         }
@@ -371,7 +371,7 @@ private fun Title(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontWeight = FontWeight.W600,
             fontSize = 22.sp,
-            fontFamily = plusJakartaSans,
+            fontFamily = WinkySansFontFamily,
         ),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         keyboardActions = KeyboardActions(onNext = {
@@ -385,7 +385,7 @@ private fun Title(
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.W600,
                         fontSize = 22.sp,
-                        fontFamily = plusJakartaSans,
+                        fontFamily = WinkySansFontFamily,
                     )
                 }
                 innerTextField()

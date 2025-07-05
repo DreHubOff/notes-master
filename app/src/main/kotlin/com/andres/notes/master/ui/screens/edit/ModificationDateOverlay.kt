@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.andres.notes.master.ui.theme.plusJakartaSans
+import com.andres.notes.master.ui.theme.WinkySansFontFamily
 
 @Composable
 fun ModificationDateOverlay(
@@ -37,7 +37,7 @@ fun ModificationDateOverlay(
             color = MaterialTheme.colorScheme.onSurface,
             fontSize = 14.sp,
             fontWeight = FontWeight.Medium,
-            fontFamily = plusJakartaSans,
+            fontFamily = WinkySansFontFamily,
         )
     }
 }

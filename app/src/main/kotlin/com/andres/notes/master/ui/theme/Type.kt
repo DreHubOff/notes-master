@@ -7,14 +7,14 @@ import androidx.compose.ui.unit.sp
 
 val Typography = Typography(
     bodyLarge = TextStyle(
-        fontFamily = plusJakartaSans,
+        fontFamily = WinkySansFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     ),
     bodyMedium = TextStyle(
-        fontFamily = plusJakartaSans,
+        fontFamily = WinkySansFontFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 15.sp,
     ),

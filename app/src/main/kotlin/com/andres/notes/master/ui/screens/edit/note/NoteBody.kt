@@ -50,7 +50,7 @@ import com.andres.notes.master.ui.screens.edit.core.ReminderButton
 import com.andres.notes.master.ui.screens.edit.core.ReminderStateData
 import com.andres.notes.master.ui.shared.sharedElementTransition
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.plusJakartaSans
+import com.andres.notes.master.ui.theme.WinkySansFontFamily
 import com.andres.notes.master.util.asStrikethroughText
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
@@ -133,7 +133,7 @@ private fun Title(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontWeight = FontWeight.W600,
             fontSize = textSize,
-            fontFamily = plusJakartaSans,
+            fontFamily = WinkySansFontFamily,
         ),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         keyboardActions = KeyboardActions(onNext = { onNextClick() }),
@@ -145,7 +145,7 @@ private fun Title(
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.W600,
                         fontSize = textSize,
-                        fontFamily = plusJakartaSans,
+                        fontFamily = WinkySansFontFamily,
                     )
                 }
                 innerTextField()
@@ -209,7 +209,7 @@ private fun Content(
         textStyle = TextStyle(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontSize = textSize,
-            fontFamily = plusJakartaSans,
+            fontFamily = WinkySansFontFamily,
         ),
         decorationBox = { innerTextField ->
             Box(Modifier.fillMaxWidth()) {
@@ -218,7 +218,7 @@ private fun Content(
                         text = stringResource(R.string.note),
                         color = MaterialTheme.colorScheme.onSurface,
                         fontSize = textSize,
-                        fontFamily = plusJakartaSans,
+                        fontFamily = WinkySansFontFamily,
                     )
                 }
                 innerTextField()

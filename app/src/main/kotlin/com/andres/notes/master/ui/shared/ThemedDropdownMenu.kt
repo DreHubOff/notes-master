@@ -35,7 +35,7 @@ import com.andres.notes.master.LocalThemeMode
 import com.andres.notes.master.R
 import com.andres.notes.master.ThemeMode
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.plusJakartaSans
+import com.andres.notes.master.ui.theme.WinkySansFontFamily
 import com.andres.notes.master.ui.theme.themedDropdownMenuItemColors
 import com.andres.notes.master.util.lighten
 
@@ -82,7 +82,7 @@ fun ThemedDropdownMenu(
                         text = actionText,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold,
-                        fontFamily = plusJakartaSans,
+                        fontFamily = WinkySansFontFamily,
                     )
                 },
                 onClick = {

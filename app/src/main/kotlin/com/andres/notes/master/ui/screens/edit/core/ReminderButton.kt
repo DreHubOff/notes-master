@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.andres.notes.master.LocalThemeMode
 import com.andres.notes.master.ThemeMode
-import com.andres.notes.master.ui.theme.plusJakartaSans
+import com.andres.notes.master.ui.theme.WinkySansFontFamily
 
 private val reminderTranslationX = (-4).dp
 
@@ -51,7 +51,7 @@ fun ReminderButton(
             text = reminderData.dateString,
             fontWeight = FontWeight.Normal,
             fontSize = 15.sp,
-            fontFamily = plusJakartaSans,
+            fontFamily = WinkySansFontFamily,
             color = MaterialTheme.colorScheme.onSurfaceVariant.let {
                 if (reminderData.outdated) it.copy(alpha = 0.6f) else it
             }

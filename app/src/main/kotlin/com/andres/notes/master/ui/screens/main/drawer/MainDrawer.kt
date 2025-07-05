@@ -28,10 +28,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.andres.notes.master.util.getAppVersionName
 import com.andres.notes.master.R
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.plusJakartaSans
+import com.andres.notes.master.ui.theme.WinkySansFontFamily
 import com.andres.notes.master.util.getAppVersionName
 import kotlinx.coroutines.launch
 
@@ -195,7 +194,7 @@ private fun DrawerItem(
             Text(
                 text = stringResource(textRes),
                 fontWeight = FontWeight.SemiBold,
-                fontFamily = plusJakartaSans,
+                fontFamily = WinkySansFontFamily,
                 fontSize = 16.sp
             )
         },

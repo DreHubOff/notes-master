@@ -26,7 +26,7 @@ import com.andres.notes.master.core.model.ThemeType
 import com.andres.notes.master.ui.screens.main.model.ThemeOption
 import com.andres.notes.master.ui.shared.AppAlertDialog
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.plusJakartaSans
+import com.andres.notes.master.ui.theme.WinkySansFontFamily
 
 @Composable
 fun ThemeSelectorDialog(
@@ -44,7 +44,7 @@ fun ThemeSelectorDialog(
                 text = title,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.SemiBold,
-                fontFamily = plusJakartaSans,
+                fontFamily = WinkySansFontFamily,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         },
@@ -72,7 +72,7 @@ fun ThemeSelectorDialog(
                                 style = TextStyle(
                                     fontWeight = FontWeight.Medium,
                                     letterSpacing = 0.5.sp,
-                                    fontFamily = plusJakartaSans,
+                                    fontFamily = WinkySansFontFamily,
                                     fontSize = 16.sp,
                                 ),
                                 modifier = Modifier.padding(start = 16.dp),

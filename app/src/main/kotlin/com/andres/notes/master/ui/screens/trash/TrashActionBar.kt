@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.andres.notes.master.R
 import com.andres.notes.master.ui.shared.ThemedDropdownMenu
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.plusJakartaSans
+import com.andres.notes.master.ui.theme.WinkySansFontFamily
 import com.andres.notes.master.ui.theme.themedTopAppBarColors
 
 @Composable
@@ -39,7 +39,7 @@ fun TrashActionBar(
             Text(
                 text = stringResource(R.string.trash),
                 fontWeight = FontWeight.SemiBold,
-                fontFamily = plusJakartaSans,
+                fontFamily = WinkySansFontFamily,
                 fontSize = 20.sp,
             )
         },
