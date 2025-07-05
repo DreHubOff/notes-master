@@ -5,9 +5,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Edit
-import androidx.compose.material.icons.outlined.Share
-import androidx.compose.material.icons.outlined.VerifiedUser
-import androidx.compose.material.icons.sharp.Translate
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
@@ -40,11 +37,6 @@ fun MainDrawer(
     modifier: Modifier = Modifier,
     onTrashClick: () -> Unit = {},
     onThemeClick: () -> Unit = {},
-    onLanguageClick: () -> Unit = {},
-    onHelpClick: () -> Unit = {},
-    onShareAppClick: () -> Unit = {},
-    onRateUsClick: () -> Unit = {},
-    onPrivacyPolicyClick: () -> Unit = {},
 ) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -103,41 +95,6 @@ fun MainDrawer(
             icon = R.drawable.ic_dark_mode,
             textRes = R.string.theme,
             onClick = { onItemClicked { onThemeClick() } }
-        )
-
-        DrawerItem(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            icon = Icons.Sharp.Translate,
-            textRes = R.string.language,
-            onClick = { onItemClicked { onLanguageClick() } }
-        )
-
-        DrawerItem(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            icon = R.drawable.ic_help,
-            textRes = R.string.help_feedback_menu,
-            onClick = { onItemClicked { onHelpClick() } }
-        )
-
-        DrawerItem(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            icon = Icons.Outlined.Share,
-            textRes = R.string.share_app,
-            onClick = { onItemClicked { onShareAppClick() } }
-        )
-
-        DrawerItem(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            icon = R.drawable.ic_thumb_up,
-            textRes = R.string.rate_us,
-            onClick = { onItemClicked { onRateUsClick() } }
-        )
-
-        DrawerItem(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            icon = Icons.Outlined.VerifiedUser,
-            textRes = R.string.privacy_policy,
-            onClick = { onItemClicked { onPrivacyPolicyClick() } }
         )
     }
 }
