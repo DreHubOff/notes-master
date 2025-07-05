@@ -5,6 +5,7 @@ package com.andres.notes.master.ui.screens.edit.checklist
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
@@ -31,6 +32,7 @@ import androidx.compose.material.icons.sharp.Add
 import androidx.compose.material.icons.sharp.KeyboardArrowDown
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -65,9 +67,11 @@ import com.andres.notes.master.ui.screens.edit.checklist.model.CheckedListItemUi
 import com.andres.notes.master.ui.screens.edit.checklist.model.UncheckedListItemUi
 import com.andres.notes.master.ui.screens.edit.core.ReminderButton
 import com.andres.notes.master.ui.screens.edit.core.ReminderStateData
+import com.andres.notes.master.ui.shared.defaultTransitionAnimationDuration
 import com.andres.notes.master.ui.shared.sharedElementTransition
 import com.andres.notes.master.ui.theme.ApplicationTheme
 import com.andres.notes.master.ui.theme.WinkySansFontFamily
+import kotlinx.coroutines.delay
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 import java.time.OffsetDateTime
@@ -215,7 +219,9 @@ fun ChecklistBody(
 
             item(key = "AddItemButton") {
                 AddItemButton(
-                    modifier = Modifier.animateItem(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .animateItem(),
                     onAddClick = onAddChecklistItemClick,
                 )
             }
@@ -325,19 +331,37 @@ private fun HideCheckedItemsButton(
 private fun AddItemButton(
     modifier: Modifier,
     onAddClick: () -> Unit,
+    addAnimationDuration: Long = defaultTransitionAnimationDuration / 2L,
 ) {
-    TextButton(
+    var runAddAnimation by remember { mutableStateOf(false) }
+    LaunchedEffect(runAddAnimation) {
+        if (runAddAnimation) {
+            delay(addAnimationDuration)
+            runAddAnimation = false
+        }
+    }
+
+    val iconRotation by animateFloatAsState(
+        targetValue = if (runAddAnimation) 30f else 0f,
+        animationSpec = tween(durationMillis = addAnimationDuration.toInt()),
+        label = "AddIconRotation"
+    )
+
+    OutlinedButton(
         modifier = modifier.padding(horizontal = 16.dp),
-        onClick = onAddClick,
-        contentPadding = PaddingValues(start = 34.dp, end = 34.dp),
-        border = null,
+        onClick = {
+            runAddAnimation = true
+            onAddClick()
+        },
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = spacedBy(8.dp),
         ) {
             Icon(
-                modifier = Modifier.size(22.dp),
+                modifier = Modifier.graphicsLayer {
+                    rotationZ = iconRotation
+                },
                 imageVector = Icons.Sharp.Add,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -345,7 +369,7 @@ private fun AddItemButton(
             Text(
                 text = stringResource(R.string.add_item),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontWeight = FontWeight.Normal,
+                fontWeight = FontWeight.Medium,
                 fontFamily = WinkySansFontFamily,
                 fontSize = 15.5.sp
             )
