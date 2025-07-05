@@ -4,7 +4,8 @@ package com.andres.notes.master.ui.screens.main.listitem
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.sharp.Timer
+import androidx.compose.material.icons.sharp.Alarm
+import androidx.compose.material.icons.sharp.AlarmOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -19,24 +20,16 @@ fun MainItemStatusIcons(
     hasScheduledReminder: Boolean = false,
 ) {
     if (hasScheduledReminder) {
-        if (reminderCompleted) {
-            Icon(
-                painter = painterResource(R.drawable.ic_timer_off),
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurface
-            )
-        } else {
-            Icon(
-                imageVector = Icons.Sharp.Timer,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurface
-            )
-        }
+        Icon(
+            imageVector = Icons.Sharp.run { if (reminderCompleted) AlarmOff else Alarm },
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurface
+        )
     }
     if (isPinned) {
         Icon(
             modifier = Modifier,
-            painter = painterResource(R.drawable.ic_material_keep),
+            painter = painterResource(R.drawable.ic_material_keep_filled),
             contentDescription = null,
             tint = MaterialTheme.colorScheme.onSurface
         )

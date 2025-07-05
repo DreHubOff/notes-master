@@ -73,19 +73,12 @@ fun MainItemContainer(
         border = borderColors,
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
-            if (title.isNotEmpty()) {
-                WithTitleNote(
-                    title = title,
-                    itemStatus = itemStatus,
-                    content = content,
-                    maxTitleLines = maxTitleLines,
-                )
-            } else {
-                WithoutTitleNote(
-                    itemStatus = itemStatus,
-                    content = content,
-                )
-            }
+            CardContent(
+                title = title,
+                itemStatus = itemStatus,
+                content = content,
+                maxTitleLines = maxTitleLines,
+            )
             Box(
                 modifier = Modifier
                     .matchParentSize()
@@ -108,7 +101,7 @@ fun MainItemContainer(
 }
 
 @Composable
-private fun WithTitleNote(
+private fun CardContent(
     title: String,
     maxTitleLines: Int,
     content: @Composable (Modifier) -> Unit,
@@ -118,35 +111,14 @@ private fun WithTitleNote(
         modifier = Modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Row(horizontalArrangement = spacedBy(10.dp)) {
+        if (title.isNotEmpty()) {
             TitleText(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier,
                 title = title,
                 mixLines = maxTitleLines
             )
-            if (itemStatus != null) {
-                Row(
-                    horizontalArrangement = spacedBy(10.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    itemStatus()
-                }
-            }
         }
         content(Modifier)
-    }
-}
-
-@Composable
-private fun WithoutTitleNote(
-    content: @Composable (Modifier) -> Unit,
-    itemStatus: @Composable() (RowScope.() -> Unit)?,
-) {
-    Row(
-        modifier = Modifier.padding(16.dp),
-        horizontalArrangement = spacedBy(10.dp)
-    ) {
-        content(Modifier.weight(1f))
         if (itemStatus != null) {
             Row(
                 horizontalArrangement = spacedBy(10.dp),

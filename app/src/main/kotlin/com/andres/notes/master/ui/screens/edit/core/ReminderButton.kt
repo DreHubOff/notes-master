@@ -4,13 +4,15 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.sharp.Timer
+import androidx.compose.material.icons.sharp.Alarm
+import androidx.compose.material.icons.sharp.AlarmOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
@@ -44,15 +46,22 @@ fun ReminderButton(
             contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     ) {
-        Icon(imageVector = Icons.Sharp.Timer, contentDescription = null)
+        val contentColor = key(reminderData.outdated) {
+            MaterialTheme.colorScheme.onSurfaceVariant.let {
+                if (reminderData.outdated) it.copy(alpha = 0.6f) else it
+            }
+        }
+        Icon(
+            imageVector = if (reminderData.outdated) Icons.Sharp.AlarmOff else Icons.Sharp.Alarm,
+            tint = contentColor,
+            contentDescription = null
+        )
         Spacer(modifier = Modifier.size(6.dp))
         Text(
             text = reminderData.dateString,
             fontWeight = FontWeight.Normal,
             fontSize = 15.sp,
-            color = MaterialTheme.colorScheme.onSurfaceVariant.let {
-                if (reminderData.outdated) it.copy(alpha = 0.6f) else it
-            }
+            color = contentColor,
         )
     }
 }
