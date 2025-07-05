@@ -75,6 +75,7 @@ fun PinCheckbox(
                 translationY = offsetY.toPx()
                 rotationZ = rotation
                 scaleY = scale
+                scaleX = scale
             },
             tint = iconTint
         )

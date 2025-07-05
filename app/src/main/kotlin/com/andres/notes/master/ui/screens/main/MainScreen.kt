@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,6 +37,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -48,6 +48,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -61,8 +62,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.andres.notes.master.R
 import com.andres.notes.master.demo_data.MainScreenDemoData
 import com.andres.notes.master.ui.screens.Route
-import com.andres.notes.master.ui.screens.main.actionbar.MainActionBar
 import com.andres.notes.master.ui.screens.main.actionbar.MainActionBarIntent
+import com.andres.notes.master.ui.screens.main.actionbar.MainTopAppBar
 import com.andres.notes.master.ui.screens.main.drawer.MainDrawer
 import com.andres.notes.master.ui.screens.main.fab.MainFabContainer
 import com.andres.notes.master.ui.screens.main.listitem.MainChecklist
@@ -165,10 +166,13 @@ private fun ScreenContent(
         onActionExecuted = onSnackbarAction,
     )
 
+    val topAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .imePadding(),
+            .imePadding()
+            .nestedScroll(topAppBarScrollBehavior.nestedScrollConnection),
         floatingActionButton = {
             MainFabContainer(
                 expanded = showOverlay,
@@ -187,12 +191,18 @@ private fun ScreenContent(
                 Snackbar(it)
             }
         },
+        topBar = {
+            MainTopAppBar(
+                state = state,
+                onIntent = onActionBarEvent,
+                scrollBehavior = topAppBarScrollBehavior,
+            )
+        }
     ) { innerPadding ->
         Box {
             DisplayState(
                 state = state,
                 innerPadding = innerPadding,
-                onActionBarEvent = onActionBarEvent,
                 openTextNoteEditor = openTextNoteEditor,
                 openCheckListEditor = openCheckListEditor,
                 onTextNoteSelected = onTextNoteLongClick,
@@ -210,7 +220,6 @@ private fun ScreenContent(
 private fun DisplayState(
     state: MainScreenState,
     innerPadding: PaddingValues,
-    onActionBarEvent: (MainActionBarIntent) -> Unit,
     openTextNoteEditor: (MainScreenItem.TextNote?) -> Unit,
     openCheckListEditor: (MainScreenItem.Checklist?) -> Unit,
     onTextNoteSelected: (MainScreenItem.TextNote) -> Unit,
@@ -226,13 +235,15 @@ private fun DisplayState(
     ) {
         val contentPadding = remember(isEmptyListState) {
             val fabsPadding = (if (isEmptyListState) 0.dp else 120.dp)
-            PaddingValues(bottom = fabsPadding + innerPadding.calculateBottomPadding())
+            PaddingValues(
+                bottom = fabsPadding + innerPadding.calculateBottomPadding(),
+                top = innerPadding.calculateTopPadding(),
+            )
         }
         List(
             state = state,
             containerPadding = contentPadding,
             listScrollState = listScrollState,
-            onActionBarEvent = onActionBarEvent,
             onChecklistSelected = onChecklistSelected,
             openCheckListEditor = openCheckListEditor,
             onTextNoteSelected = onTextNoteSelected,
@@ -253,7 +264,6 @@ private fun List(
     containerPadding: PaddingValues,
     listScrollState: LazyListState,
     state: MainScreenState,
-    onActionBarEvent: (MainActionBarIntent) -> Unit,
     onChecklistSelected: (MainScreenItem.Checklist) -> Unit,
     openCheckListEditor: (MainScreenItem.Checklist?) -> Unit,
     onTextNoteSelected: (MainScreenItem.TextNote) -> Unit,
@@ -268,26 +278,6 @@ private fun List(
         state = listScrollState,
         userScrollEnabled = state.screenItems.isNotEmpty(),
     ) {
-        if (state.searchEnabled || state.isSelectionMode) {
-            stickyHeader(key = "MainActionBar-sticky") {
-                MainActionBar(
-                    state = state,
-                    modifier = Modifier.fillMaxWidth(),
-                    onEvent = onActionBarEvent,
-                )
-            }
-        } else {
-            item(key = "MainActionBar-floating") {
-                MainActionBar(
-                    state = state,
-                    modifier = Modifier.fillMaxWidth(),
-                    onEvent = onActionBarEvent,
-                )
-            }
-        }
-
-        item { Spacer(modifier = Modifier.height(4.dp)) }
-
         items(state.screenItems, key = { it.compositeKey }) { item ->
             when (item) {
                 is MainScreenItem.Checklist ->
