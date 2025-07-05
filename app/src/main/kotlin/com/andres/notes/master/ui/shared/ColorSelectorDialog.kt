@@ -149,7 +149,7 @@ private fun PreviewSelectedNonNull() {
         ColorSelectorDialog(
             title = "Note Color",
             colors = mutableListOf(null) + NoteColor.entries,
-            selectedColor = NoteColor.Lilac,
+            selectedColor = NoteColor.Apricot,
             onDismiss = {},
             onColorSelected = {},
         )
@@ -163,7 +163,7 @@ private fun PreviewSelectedUndefined() {
         ColorSelectorDialog(
             title = "Note Color",
             colors = mutableListOf(null) + NoteColor.entries,
-            selectedColor = NoteColor.Lime,
+            selectedColor = NoteColor.Apricot,
             selectedColorUndefined = true,
             onDismiss = {},
             onColorSelected = {},

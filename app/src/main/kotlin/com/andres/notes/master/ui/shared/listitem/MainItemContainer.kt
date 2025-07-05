@@ -241,7 +241,7 @@ private fun WithIconStatusCustomBackgroundPreview() {
             title = "Trashed Reminder",
             maxTitleLines = 1,
             isSelected = false,
-            customBackground = NoteColor.Mint,
+            customBackground = NoteColor.Jade,
             onClick = {},
             itemStatus = {
                 Icon(
