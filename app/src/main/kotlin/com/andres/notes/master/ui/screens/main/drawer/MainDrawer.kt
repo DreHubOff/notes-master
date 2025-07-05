@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.andres.notes.master.R
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.WinkySansFontFamily
 import com.andres.notes.master.util.getAppVersionName
 import kotlinx.coroutines.launch
 
@@ -151,7 +150,6 @@ private fun DrawerItem(
             Text(
                 text = stringResource(textRes),
                 fontWeight = FontWeight.SemiBold,
-                fontFamily = WinkySansFontFamily,
                 fontSize = 16.sp
             )
         },

@@ -70,7 +70,7 @@ import com.andres.notes.master.ui.screens.edit.core.ReminderStateData
 import com.andres.notes.master.ui.shared.defaultTransitionAnimationDuration
 import com.andres.notes.master.ui.shared.sharedElementTransition
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.WinkySansFontFamily
+import com.andres.notes.master.ui.theme.IMFGreatPrimerFontFamily
 import kotlinx.coroutines.delay
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
@@ -321,7 +321,6 @@ private fun HideCheckedItemsButton(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontWeight = FontWeight.Normal,
                 fontSize = 15.5.sp,
-                fontFamily = WinkySansFontFamily,
             )
         }
     }
@@ -370,7 +369,6 @@ private fun AddItemButton(
                 text = stringResource(R.string.add_item),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontWeight = FontWeight.Medium,
-                fontFamily = WinkySansFontFamily,
                 fontSize = 15.5.sp
             )
         }
@@ -393,9 +391,10 @@ private fun Title(
             .wrapContentHeight(),
         textStyle = TextStyle(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            fontWeight = FontWeight.W600,
+            fontWeight = FontWeight.Bold,
             fontSize = 22.sp,
-            fontFamily = WinkySansFontFamily,
+            letterSpacing = 1.5.sp,
+            fontFamily = IMFGreatPrimerFontFamily,
         ),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         keyboardActions = KeyboardActions(onNext = {
@@ -407,9 +406,10 @@ private fun Title(
                     Text(
                         text = stringResource(R.string.title),
                         color = MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.W600,
+                        fontWeight = FontWeight.Bold,
                         fontSize = 22.sp,
-                        fontFamily = WinkySansFontFamily,
+                        letterSpacing = 1.5.sp,
+                        fontFamily = IMFGreatPrimerFontFamily,
                     )
                 }
                 innerTextField()

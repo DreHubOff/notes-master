@@ -13,7 +13,6 @@ import com.andres.notes.master.ui.shared.listitem.TextNoteCard
 import com.andres.notes.master.ui.shared.listitem.TextNoteCardData
 import com.andres.notes.master.ui.shared.rememberTextNoteToEditorTransitionKey
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.WinkySansFontFamily
 
 @Composable
 fun TrashTextNote(
@@ -42,7 +41,6 @@ fun TrashTextNote(
                 color = MaterialTheme.colorScheme.error,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
-                fontFamily = WinkySansFontFamily,
             )
         }
     )

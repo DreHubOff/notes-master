@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.sp
 import com.andres.notes.master.demo_data.MainScreenDemoData
 import com.andres.notes.master.demo_data.MainScreenDemoData.TextNotes.asCardData
 import com.andres.notes.master.ui.theme.ApplicationTheme
+import com.andres.notes.master.ui.theme.IMFGreatPrimerFontFamily
 
 private const val MAX_LINES_CONTENT = 10
 
@@ -52,10 +53,11 @@ private fun ContentText(modifier: Modifier, text: String) {
         color = MaterialTheme.colorScheme.onSurface,
         maxLines = MAX_LINES_CONTENT,
         overflow = TextOverflow.Ellipsis,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp,
-        lineHeight = 17.sp,
-        letterSpacing = 0.1.sp
+        lineHeight = 18.sp,
+        letterSpacing = 1.3.sp,
+        fontFamily = IMFGreatPrimerFontFamily,
     )
 }
 

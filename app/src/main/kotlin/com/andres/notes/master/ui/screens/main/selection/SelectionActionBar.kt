@@ -41,7 +41,6 @@ import com.andres.notes.master.R
 import com.andres.notes.master.ui.screens.main.search.SearchBarDefaults
 import com.andres.notes.master.ui.shared.PinCheckbox
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.WinkySansFontFamily
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -169,7 +168,6 @@ private fun ActionBarContent(
         textStyle = LocalTextStyle.current + TextStyle(
             fontSize = 18.sp,
             fontWeight = FontWeight.SemiBold,
-            fontFamily = WinkySansFontFamily,
         ),
         colors = TextFieldDefaults.colors(
             disabledContainerColor = Color.Transparent,

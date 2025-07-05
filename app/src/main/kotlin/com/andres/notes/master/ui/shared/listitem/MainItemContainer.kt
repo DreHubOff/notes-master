@@ -37,6 +37,7 @@ import com.andres.notes.master.R
 import com.andres.notes.master.core.model.NoteColor
 import com.andres.notes.master.ui.shared.sharedBoundsTransition
 import com.andres.notes.master.ui.theme.ApplicationTheme
+import com.andres.notes.master.ui.theme.IMFGreatPrimerFontFamily
 import com.andres.notes.master.ui.theme.themedCardBorder
 import com.andres.notes.master.ui.theme.themedCardColors
 
@@ -162,13 +163,14 @@ private fun TitleText(modifier: Modifier, title: String, mixLines: Int) {
     Text(
         modifier = modifier,
         text = title,
-        fontSize = 18.sp,
-        fontWeight = FontWeight.SemiBold,
+        fontSize = 19.sp,
+        fontWeight = FontWeight.Bold,
+        fontFamily = IMFGreatPrimerFontFamily,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         maxLines = mixLines,
         overflow = TextOverflow.Ellipsis,
         lineHeight = 19.sp,
-        letterSpacing = 0.1.sp
+        letterSpacing = 1.5.sp,
     )
 }
 

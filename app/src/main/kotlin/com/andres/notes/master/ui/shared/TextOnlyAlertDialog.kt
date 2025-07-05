@@ -11,7 +11,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.WinkySansFontFamily
 
 @Composable
 fun TextOnlyAlertDialog(
@@ -30,7 +29,6 @@ fun TextOnlyAlertDialog(
                     text = title,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.SemiBold,
-                    fontFamily = WinkySansFontFamily,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
@@ -44,7 +42,6 @@ fun TextOnlyAlertDialog(
                     text = text,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Normal,
-                    fontFamily = WinkySansFontFamily,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
             }

@@ -28,7 +28,6 @@ import com.andres.notes.master.R
 import com.andres.notes.master.ui.screens.edit.core.ReminderEditorData
 import com.andres.notes.master.ui.shared.AppAlertDialog
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.WinkySansFontFamily
 
 @Composable
 fun RemainderEditorOverviewDialog(
@@ -52,7 +51,6 @@ fun RemainderEditorOverviewDialog(
                 text = dialogTitle,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.SemiBold,
-                fontFamily = WinkySansFontFamily,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         },
@@ -102,7 +100,6 @@ private fun DateTimeSelectionButton(
                 letterSpacing = 0.5.sp,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
-                fontFamily = WinkySansFontFamily,
             )
         )
         Icon(

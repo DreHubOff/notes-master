@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.andres.notes.master.R
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.WinkySansFontFamily
 
 @Composable
 fun SecondaryFAB(
@@ -45,7 +44,6 @@ fun SecondaryFAB(
         ) {
             Text(
                 text = stringResource(text),
-                fontFamily = WinkySansFontFamily,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
             )

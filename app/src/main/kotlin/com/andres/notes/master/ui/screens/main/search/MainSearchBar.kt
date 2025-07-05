@@ -44,7 +44,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.andres.notes.master.R
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.WinkySansFontFamily
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -166,7 +165,6 @@ private fun SearchBarContent(
                 color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
-                fontFamily = WinkySansFontFamily,
             )
         },
         leadingIcon = {
@@ -194,7 +192,6 @@ private fun SearchBarContent(
         textStyle = LocalTextStyle.current.copy(
             fontSize = 18.sp,
             fontWeight = FontWeight.SemiBold,
-            fontFamily = WinkySansFontFamily,
         ),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(onDone = { onDoneClick() }),

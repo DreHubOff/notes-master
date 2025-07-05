@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.andres.notes.master.ui.theme.ApplicationTheme
+import com.andres.notes.master.ui.theme.IMFGreatPrimerFontFamily
 import com.andres.notes.master.ui.theme.themedCheckboxColors
 
 @Composable
@@ -48,8 +49,9 @@ fun ChecklistCheckbox(
                 .graphicsLayer { this.translationX = translationX },
             text = text,
             color = MaterialTheme.colorScheme.onSurface,
-            fontWeight = FontWeight.Medium,
+            fontWeight = FontWeight.SemiBold,
             fontSize = 16.sp,
+            fontFamily = IMFGreatPrimerFontFamily,
         )
     }
 }

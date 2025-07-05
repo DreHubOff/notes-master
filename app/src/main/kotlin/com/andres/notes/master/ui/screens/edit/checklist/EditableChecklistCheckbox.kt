@@ -53,7 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.andres.notes.master.ui.focus.ElementFocusRequest
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.WinkySansFontFamily
+import com.andres.notes.master.ui.theme.IMFGreatPrimerFontFamily
 import com.andres.notes.master.ui.theme.themedCheckboxColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -113,11 +113,10 @@ fun EditableChecklistCheckbox(
         val textColor = MaterialTheme.colorScheme.run { if (checked) onSurface else onSurfaceVariant }
         val textStyle = TextStyle(
             color = textColor,
-            fontSize = 15.5.sp,
-            lineHeight = 18.sp,
-            letterSpacing = 0.sp,
-            fontWeight = FontWeight.Normal,
-            fontFamily = WinkySansFontFamily,
+            fontSize = 18.sp,
+            letterSpacing = 1.sp,
+            fontWeight = FontWeight.Medium,
+            fontFamily = IMFGreatPrimerFontFamily,
             textDecoration = if (checked) TextDecoration.LineThrough else null,
         )
 

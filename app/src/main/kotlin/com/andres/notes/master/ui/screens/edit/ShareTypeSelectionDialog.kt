@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.sp
 import com.andres.notes.master.R
 import com.andres.notes.master.ui.shared.AppAlertDialog
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.WinkySansFontFamily
 
 enum class ShareContentType(
     @DrawableRes
@@ -65,7 +64,6 @@ fun ShareTypeSelectionDialog(
                 text = title,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.SemiBold,
-                fontFamily = WinkySansFontFamily,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         },
@@ -92,7 +90,6 @@ fun ShareTypeSelectionDialog(
                             style = TextStyle(
                                 fontWeight = FontWeight.SemiBold,
                                 letterSpacing = 0.5.sp,
-                                fontFamily = WinkySansFontFamily,
                                 fontSize = 18.sp,
                             )
                         )

@@ -50,7 +50,7 @@ import com.andres.notes.master.ui.screens.edit.core.ReminderButton
 import com.andres.notes.master.ui.screens.edit.core.ReminderStateData
 import com.andres.notes.master.ui.shared.sharedElementTransition
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import com.andres.notes.master.ui.theme.WinkySansFontFamily
+import com.andres.notes.master.ui.theme.IMFGreatPrimerFontFamily
 import com.andres.notes.master.util.asStrikethroughText
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
@@ -131,9 +131,10 @@ private fun Title(
             .wrapContentHeight(),
         textStyle = TextStyle(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            fontWeight = FontWeight.W600,
+            fontWeight = FontWeight.Bold,
             fontSize = textSize,
-            fontFamily = WinkySansFontFamily,
+            letterSpacing = 1.5.sp,
+            fontFamily = IMFGreatPrimerFontFamily,
         ),
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         keyboardActions = KeyboardActions(onNext = { onNextClick() }),
@@ -143,9 +144,10 @@ private fun Title(
                     Text(
                         text = stringResource(R.string.title),
                         color = MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.W600,
+                        fontWeight = FontWeight.Bold,
                         fontSize = textSize,
-                        fontFamily = WinkySansFontFamily,
+                        letterSpacing = 1.5.sp,
+                        fontFamily = IMFGreatPrimerFontFamily,
                     )
                 }
                 innerTextField()
@@ -209,7 +211,9 @@ private fun Content(
         textStyle = TextStyle(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontSize = textSize,
-            fontFamily = WinkySansFontFamily,
+            fontFamily = IMFGreatPrimerFontFamily,
+            fontWeight = FontWeight.Bold,
+            letterSpacing = 1.3.sp,
         ),
         decorationBox = { innerTextField ->
             Box(Modifier.fillMaxWidth()) {
@@ -218,7 +222,9 @@ private fun Content(
                         text = stringResource(R.string.note),
                         color = MaterialTheme.colorScheme.onSurface,
                         fontSize = textSize,
-                        fontFamily = WinkySansFontFamily,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = IMFGreatPrimerFontFamily,
+                        letterSpacing = 1.3.sp,
                     )
                 }
                 innerTextField()
