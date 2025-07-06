@@ -28,7 +28,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.core.content.IntentCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -68,6 +67,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
+import javax.inject.Provider
 
 private val TAG = MainActivity::class.java.simpleName
 
@@ -79,6 +79,9 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var userPreferences: UserPreferences
+
+    @Inject
+    lateinit var jsonProvider: Provider<Json>
 
     private var initialThemeType: ThemeType? = null
 
@@ -138,12 +141,12 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        intent.targetItem?.let(::openItemEditorScreen)
+        intent.targetItem(jsonProvider.get())?.let(::openItemEditorScreen)
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        intent.targetItem?.let(::openItemEditorScreen)
+        intent.targetItem(jsonProvider.get())?.let(::openItemEditorScreen)
     }
 
     private fun openItemEditorScreen(itemToOpen: ApplicationMainDataType) {
@@ -296,18 +299,16 @@ class MainActivity : ComponentActivity() {
 
         private const val KEY_TARGET_ITEM = "target_item"
 
-        private val Intent.targetItem: ApplicationMainDataType?
-            get() = IntentCompat.getParcelableExtra(
-                this,
-                KEY_TARGET_ITEM,
-                ApplicationMainDataType::class.java
-            )
+        private fun Intent.targetItem(json: Json): ApplicationMainDataType? {
+            val itemJson = getStringExtra(KEY_TARGET_ITEM) ?: return null
+            return json.decodeFromString(itemJson)
+        }
 
         fun getOpenItemEditorIntent(
             context: Context,
             json: Json,
             item: ApplicationMainDataType,
-            ): Intent =
+        ): Intent =
             Intent(context, MainActivity::class.java)
                 .putExtra(KEY_TARGET_ITEM, json.encodeToString(item))
                 .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
