@@ -74,7 +74,7 @@ import com.andres.notes.master.ui.theme.IMFGreatPrimerFontFamily
 import kotlinx.coroutines.delay
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
-import java.time.OffsetDateTime
+import kotlin.time.Clock
 
 @Composable
 fun ChecklistBody(
@@ -452,7 +452,7 @@ private fun PreviewListWithReminder() {
             title = "This is a title",
             uncheckedItems = EditChecklistDemoData.uncheckedChecklistItems,
             reminderStateData = ReminderStateData(
-                sourceDate = OffsetDateTime.now(),
+                sourceDate = Clock.System.now(),
                 dateString = AnnotatedString("21 May, 10:12 AM"),
                 outdated = false,
             ),

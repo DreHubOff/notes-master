@@ -10,7 +10,7 @@ data class ThemeSelectorData(
 )
 
 data class ThemeOption(
-    @StringRes val nameRes: Int,
+    @param:StringRes val nameRes: Int,
     val type: ThemeType,
     val isSelected: Boolean,
 )

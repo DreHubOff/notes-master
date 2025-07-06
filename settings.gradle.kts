@@ -22,4 +22,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Notes Master"
 include(":app")
- 
+include(":core:model")

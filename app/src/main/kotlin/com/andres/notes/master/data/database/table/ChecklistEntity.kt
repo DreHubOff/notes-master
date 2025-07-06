@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.andres.notes.master.core.model.NoteColor
-import java.time.OffsetDateTime
+import kotlin.time.Instant
 
 const val CHECKLIST_TABLE_NAME = "checklists"
 
@@ -19,13 +19,13 @@ data class ChecklistEntity(
     val title: String,
 
     @ColumnInfo("creation_date", typeAffinity = ColumnInfo.INTEGER)
-    val creationDate: OffsetDateTime,
+    val creationDate: Instant,
 
     @ColumnInfo("modification_date", typeAffinity = ColumnInfo.INTEGER)
-    val modificationDate: OffsetDateTime,
+    val modificationDate: Instant,
 
     @ColumnInfo("reminder_date", typeAffinity = ColumnInfo.INTEGER)
-    val reminderDate: OffsetDateTime?,
+    val reminderDate: Instant?,
 
     @ColumnInfo("pinned")
     val isPinned: Boolean,
@@ -37,7 +37,7 @@ data class ChecklistEntity(
     val isTrashed: Boolean,
 
     @ColumnInfo("trashed_date")
-    val trashedDate: OffsetDateTime?,
+    val trashedDate: Instant?,
 
     @ColumnInfo("reminder_posted")
     val reminderHasBeenPosted: Boolean,

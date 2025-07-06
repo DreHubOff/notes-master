@@ -8,7 +8,7 @@ import java.io.File
 import javax.inject.Inject
 
 class FileManagerRepository @Inject constructor(
-    @ApplicationContext
+    @param:ApplicationContext
     private val context: Context,
 ) {
 

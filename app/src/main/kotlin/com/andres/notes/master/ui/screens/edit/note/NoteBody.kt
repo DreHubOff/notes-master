@@ -53,7 +53,7 @@ import com.andres.notes.master.ui.theme.ApplicationTheme
 import com.andres.notes.master.ui.theme.IMFGreatPrimerFontFamily
 import com.andres.notes.master.util.asStrikethroughText
 import kotlinx.coroutines.launch
-import java.time.OffsetDateTime
+import kotlin.time.Clock
 
 @Composable
 fun NoteBody(
@@ -242,7 +242,7 @@ private fun Preview() {
             title = MainScreenDemoData.TextNotes.welcomeBanner.title,
             content = MainScreenDemoData.TextNotes.welcomeBanner.content,
             reminderData = ReminderStateData(
-                sourceDate = OffsetDateTime.now(),
+                sourceDate = Clock.System.now(),
                 dateString = AnnotatedString("21 May, 10:12 AM"),
                 outdated = false,
                 reminderColorDay = Color(0x14017FFA)
@@ -260,7 +260,7 @@ private fun PreviewOutdatedReminder() {
             title = MainScreenDemoData.TextNotes.welcomeBanner.title,
             content = MainScreenDemoData.TextNotes.welcomeBanner.content,
             reminderData = ReminderStateData(
-                sourceDate = OffsetDateTime.now(),
+                sourceDate = Clock.System.now(),
                 dateString = "21 May, 10:12 AM".asStrikethroughText(),
                 outdated = true,
                 reminderColorDay = Color(0x14017FFA)
@@ -278,7 +278,7 @@ private fun PreviewEmpty() {
             title = "",
             content = "",
             reminderData = ReminderStateData(
-                sourceDate = OffsetDateTime.now(),
+                sourceDate = Clock.System.now(),
                 dateString = "21 May, 10:12 AM".asStrikethroughText(),
                 outdated = true,
                 reminderColorDay = Color(0x14017FFA)

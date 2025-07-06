@@ -15,9 +15,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
+import kotlin.time.toJavaInstant
 
 class BuildPdfFromTextNoteInteractor @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val textNotesRepository: TextNotesRepository,
     private val fileManagerRepository: FileManagerRepository,
 ) {
@@ -60,6 +61,6 @@ class BuildPdfFromTextNoteInteractor @Inject constructor(
 
     private fun buildPdfName(textNote: TextNote): String {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")
-        return "Note_${formatter.format(textNote.creationDate)}.pdf"
+        return "Note_${formatter.format(textNote.creationDate.toJavaInstant())}.pdf"
     }
 }

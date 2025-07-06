@@ -11,7 +11,7 @@ import com.andres.notes.master.data.database.table.CHECKLIST_TABLE_NAME
 import com.andres.notes.master.data.database.table.ChecklistEntity
 import com.andres.notes.master.data.database.table.ChecklistWithItems
 import kotlinx.coroutines.flow.Flow
-import java.time.OffsetDateTime
+import kotlin.time.Instant
 
 @Dao
 interface ChecklistDao {
@@ -52,13 +52,13 @@ interface ChecklistDao {
     suspend fun updateChecklistTitleById(id: Long, title: String)
 
     @Transaction
-    suspend fun updateChecklistTitleById(id: Long, title: String, modificationDate: OffsetDateTime) {
+    suspend fun updateChecklistTitleById(id: Long, title: String, modificationDate: Instant) {
         updateChecklistTitleById(id, title)
         updateChecklistModifiedDateById(id, modificationDate)
     }
 
     @Query("UPDATE $CHECKLIST_TABLE_NAME SET modification_date = :date WHERE id = :id")
-    suspend fun updateChecklistModifiedDateById(id: Long, date: OffsetDateTime)
+    suspend fun updateChecklistModifiedDateById(id: Long, date: Instant)
 
     @Query("UPDATE $CHECKLIST_TABLE_NAME SET pinned = :isPinned WHERE id = :id")
     suspend fun updatePinnedStateById(id: Long, isPinned: Boolean)
@@ -73,13 +73,13 @@ interface ChecklistDao {
     suspend fun updateIsTrashedById(id: Long, isTrashed: Boolean)
 
     @Query("UPDATE $CHECKLIST_TABLE_NAME SET trashed_date = :date WHERE id = :id")
-    suspend fun updateTrashedDateById(id: Long, date: OffsetDateTime?)
+    suspend fun updateTrashedDateById(id: Long, date: Instant?)
 
     @Query("DELETE FROM $CHECKLIST_TABLE_NAME WHERE id = :checklistId")
     suspend fun deleteChecklistById(checklistId: Long)
 
     @Query("UPDATE $CHECKLIST_TABLE_NAME SET reminder_date = :date WHERE id = :id")
-    suspend fun updateReminderDateById(id: Long, date: OffsetDateTime?)
+    suspend fun updateReminderDateById(id: Long, date: Instant?)
 
     @Query("UPDATE $CHECKLIST_TABLE_NAME SET reminder_posted = :isShown WHERE id = :id")
     suspend fun updateChecklistReminderShownState(id: Long, isShown: Boolean)

@@ -15,8 +15,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import java.time.OffsetDateTime
 import javax.inject.Inject
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 class ChecklistRepository @Inject constructor(
     private val database: AppDatabase,
@@ -62,7 +63,7 @@ class ChecklistRepository @Inject constructor(
             checklistDao.updateChecklistTitleById(
                 id = checklistId,
                 title = title,
-                modificationDate = OffsetDateTime.now()
+                modificationDate = Clock.System.now()
             )
         }
     }
@@ -79,7 +80,7 @@ class ChecklistRepository @Inject constructor(
             database.withTransaction {
                 val newPosition = (checklistItemDao.getLastListPosition(checklistId) ?: -1) + 1
                 val itemToSave = item.copy(listPosition = newPosition).toEntity(parentChecklistId = checklistId)
-                checklistDao.updateChecklistModifiedDateById(id = checklistId, date = OffsetDateTime.now())
+                checklistDao.updateChecklistModifiedDateById(id = checklistId, date = Clock.System.now())
                 checklistItemDao.insertChecklistItem(itemToSave) to newPosition
             }
         }
@@ -90,7 +91,7 @@ class ChecklistRepository @Inject constructor(
         withContext(NonCancellable) {
             database.withTransaction {
                 checklistItemDao.updateCheckedStateByIds(checked = isChecked, checklistId = checklistId, itemId = itemId)
-                checklistDao.updateChecklistModifiedDateById(id = checklistId, date = OffsetDateTime.now())
+                checklistDao.updateChecklistModifiedDateById(id = checklistId, date = Clock.System.now())
             }
         }
     }
@@ -98,7 +99,7 @@ class ChecklistRepository @Inject constructor(
     suspend fun updateChecklistItemTitle(itemId: Long, checklistId: Long, title: String) {
         withContext(NonCancellable) {
             database.withTransaction {
-                checklistDao.updateChecklistModifiedDateById(id = checklistId, date = OffsetDateTime.now())
+                checklistDao.updateChecklistModifiedDateById(id = checklistId, date = Clock.System.now())
                 checklistItemDao.updateTitleByIds(itemId = itemId, checklistId = checklistId, title = title)
             }
         }
@@ -107,7 +108,7 @@ class ChecklistRepository @Inject constructor(
     suspend fun deleteChecklistItem(itemId: Long, checklistId: Long) {
         withContext(NonCancellable) {
             database.withTransaction {
-                checklistDao.updateChecklistModifiedDateById(id = checklistId, date = OffsetDateTime.now())
+                checklistDao.updateChecklistModifiedDateById(id = checklistId, date = Clock.System.now())
                 checklistItemDao.deleteItem(itemId = itemId, checklistId = checklistId)
                 reorderItemPositions(checklistId = checklistId)
             }
@@ -191,7 +192,7 @@ class ChecklistRepository @Inject constructor(
         withContext(NonCancellable) {
             database.withTransaction {
                 checklistDao.updateIsTrashedById(id = itemId, isTrashed = true)
-                checklistDao.updateTrashedDateById(id = itemId, date = OffsetDateTime.now())
+                checklistDao.updateTrashedDateById(id = itemId, date = Clock.System.now())
                 checklistDao.updatePinnedStateById(id = itemId, isPinned = false)
             }
         }
@@ -205,7 +206,7 @@ class ChecklistRepository @Inject constructor(
         checklistDao.updateReminderDateById(id = itemId, date = null)
     }
 
-    suspend fun storeReminderDate(itemId: Long, date: OffsetDateTime) {
+    suspend fun storeReminderDate(itemId: Long, date: Instant) {
         withContext(NonCancellable) {
             checklistDao.updateReminderDateById(id = itemId, date = date)
         }

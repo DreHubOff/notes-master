@@ -12,8 +12,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.withContext
-import java.time.OffsetDateTime
 import javax.inject.Inject
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 class TextNotesRepository @Inject constructor(
     private val database: AppDatabase,
@@ -65,7 +66,7 @@ class TextNotesRepository @Inject constructor(
         withContext(NonCancellable) {
             database.withTransaction {
                 textNoteDao.updateTitleById(id = itemId, newTitle = title)
-                textNoteDao.updateModificationDateById(id = itemId, newDate = OffsetDateTime.now())
+                textNoteDao.updateModificationDateById(id = itemId, newDate = Clock.System.now())
             }
         }
     }
@@ -74,7 +75,7 @@ class TextNotesRepository @Inject constructor(
         withContext(NonCancellable) {
             database.withTransaction {
                 textNoteDao.updateContentById(id = itemId, newContent = content)
-                textNoteDao.updateModificationDateById(id = itemId, newDate = OffsetDateTime.now())
+                textNoteDao.updateModificationDateById(id = itemId, newDate = Clock.System.now())
             }
         }
     }
@@ -83,7 +84,7 @@ class TextNotesRepository @Inject constructor(
         withContext(NonCancellable) {
             database.withTransaction {
                 textNoteDao.updateIsTrashedById(id = itemId, isTrashed = true)
-                textNoteDao.updateTrashedDateById(id = itemId, date = OffsetDateTime.now())
+                textNoteDao.updateTrashedDateById(id = itemId, date = Clock.System.now())
                 textNoteDao.updatePinnedStateById(id = itemId, pinned = false)
             }
         }
@@ -102,7 +103,7 @@ class TextNotesRepository @Inject constructor(
         textNoteDao.updateReminderDateById(id = itemId, date = null)
     }
 
-    suspend fun storeReminderDate(itemId: Long, date: OffsetDateTime) {
+    suspend fun storeReminderDate(itemId: Long, date: Instant) {
         withContext(NonCancellable) {
             textNoteDao.updateReminderDateById(id = itemId, date = date)
         }

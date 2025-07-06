@@ -28,8 +28,8 @@ import com.andres.notes.master.ui.theme.ApplicationTheme
 
 private data class SecondaryFAB(
     val icon: ImageVector,
-    @StringRes val text: Int,
-    @StringRes val description: Int,
+    @param:StringRes val text: Int,
+    @param:StringRes val description: Int,
     val clickAction: () -> Unit = {},
 )
 

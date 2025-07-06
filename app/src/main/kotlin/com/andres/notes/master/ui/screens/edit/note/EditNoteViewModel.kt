@@ -43,9 +43,9 @@ class EditNoteViewModel @Inject constructor(
     editorFacade: TextNoteEditorFacade,
     permissionsRepository: Provider<PermissionsRepository>,
     private val savedStateHandle: SavedStateHandle,
-    @ApplicationContext
+    @param:ApplicationContext
     private val context: Context,
-    @ApplicationGlobalScope
+    @param:ApplicationGlobalScope
     private val applicationCoroutineScope: CoroutineScope,
     private val buildPdfFromTextNote: Provider<BuildPdfFromTextNoteInteractor>,
     private val navigationEventsHost: NavigationEventsHost,

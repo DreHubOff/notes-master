@@ -8,7 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import javax.inject.Inject
 
-class ShareFileIntentBuilder @Inject constructor(@ApplicationContext private val context: Context) {
+class ShareFileIntentBuilder @Inject constructor(@param:ApplicationContext private val context: Context) {
 
     fun build(
         file: File,

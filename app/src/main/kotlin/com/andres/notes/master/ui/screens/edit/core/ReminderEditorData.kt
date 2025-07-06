@@ -1,11 +1,10 @@
 package com.andres.notes.master.ui.screens.edit.core
 
 import androidx.compose.runtime.Stable
-import java.time.Instant
-import java.time.OffsetDateTime
-import java.time.ZoneId
-import java.time.ZoneOffset
-import java.time.ZonedDateTime
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
 
 @Stable
 data class ReminderEditorData(
@@ -19,20 +18,20 @@ data class ReminderEditorData(
     val timeString: String,
 ) {
 
-    fun asZonedDateTime(): OffsetDateTime {
-        val selectedDay = Instant.ofEpochMilli(dateMillis ?: System.currentTimeMillis())
-            .atZone(ZoneOffset.UTC)
-            .toOffsetDateTime()
+    fun asZonedDateTime(): LocalDateTime {
+        val instant = dateMillis
+            ?.let(kotlin.time.Instant::fromEpochMilliseconds)
+            ?: Clock.System.now()
 
-        return OffsetDateTime.of(
-            selectedDay.year,
-            selectedDay.monthValue,
-            selectedDay.dayOfMonth,
-            hourOfDay,
-            minuteOfHour,
-            0,
-            0,
-            ZonedDateTime.now(ZoneId.systemDefault()).offset,
+        val utcDate = instant.toLocalDateTime(TimeZone.UTC)
+        return LocalDateTime(
+            year = utcDate.year,
+            month = utcDate.month,
+            day = utcDate.day,
+            hour = hourOfDay,
+            minute = minuteOfHour,
+            second = 0,
+            nanosecond = 0,
         )
     }
 }

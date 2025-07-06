@@ -21,7 +21,7 @@ private const val SAVED_ANY_NOTE_KEY = "saved-any-note"
 private const val THEM_PREFERENCE_KEY = "theme-preference"
 
 class UserPreferences @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
 ) {
 
     private val storage by lazy { context.getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE) }

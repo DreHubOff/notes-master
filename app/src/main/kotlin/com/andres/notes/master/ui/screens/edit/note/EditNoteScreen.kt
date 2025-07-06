@@ -40,7 +40,6 @@ import com.andres.notes.master.demo_data.MainScreenDemoData
 import com.andres.notes.master.ui.screens.edit.EditActionBar
 import com.andres.notes.master.ui.screens.edit.ModificationDateOverlay
 import com.andres.notes.master.ui.screens.edit.ShareTypeSelectionDialog
-import com.andres.notes.master.ui.screens.edit.core.EditScreenViewModel
 import com.andres.notes.master.ui.screens.edit.core.ReminderStateData
 import com.andres.notes.master.ui.screens.edit.note.model.EditNoteScreenState
 import com.andres.notes.master.ui.screens.edit.reminder.RemainderDatePickerDialog
@@ -55,7 +54,7 @@ import com.andres.notes.master.ui.shared.mainItemCardTransition
 import com.andres.notes.master.ui.shared.rememberTextNoteToEditorTitleTransitionKey
 import com.andres.notes.master.ui.shared.rememberTextNoteToEditorTransitionKey
 import com.andres.notes.master.ui.theme.ApplicationTheme
-import java.time.OffsetDateTime
+import kotlin.time.Clock
 
 @Composable
 fun EditNoteScreen() {
@@ -323,7 +322,7 @@ private class EditNoteScreenStateProvider :
                 itemId = 3,
                 isPinned = true,
                 reminderData = ReminderStateData(
-                    sourceDate = OffsetDateTime.now(),
+                    sourceDate = Clock.System.now(),
                     dateString = AnnotatedString(text = "21 May, 10:12 AM"),
                     outdated = false,
                     reminderColorDay = Color(0x14017FFA),

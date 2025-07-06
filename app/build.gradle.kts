@@ -10,6 +10,14 @@ plugins {
 
 kotlin {
     jvmToolchain(17)
+
+    sourceSets {
+        all {
+            languageSettings {
+                optIn("kotlin.time.ExperimentalTime")
+            }
+        }
+    }
 }
 
 android {
@@ -45,6 +53,8 @@ android {
 
 dependencies {
 
+    implementation(project(":core:model"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -71,6 +81,7 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.datetime)
 
     implementation(libs.list.reorderable)
 

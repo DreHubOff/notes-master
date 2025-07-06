@@ -27,9 +27,9 @@ import com.andres.notes.master.ui.shared.AppAlertDialog
 import com.andres.notes.master.ui.theme.ApplicationTheme
 
 enum class ShareContentType(
-    @DrawableRes
+    @param:DrawableRes
     val iconRes: Int,
-    @StringRes
+    @param:StringRes
     val messageRes: Int,
 ) {
     AS_TEXT(iconRes = R.drawable.ic_format_txt, messageRes = R.string.share_as_text),

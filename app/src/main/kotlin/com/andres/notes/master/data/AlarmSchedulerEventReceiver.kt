@@ -14,13 +14,17 @@ import com.andres.notes.master.R
 import com.andres.notes.master.core.model.ApplicationMainDataType
 import com.andres.notes.master.core.model.Checklist
 import com.andres.notes.master.core.model.TextNote
+import com.andres.notes.master.di.qualifier.ApplicationGlobalScope
+import com.andres.notes.master.di.qualifier.BulletPointSymbol
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.time.OffsetDateTime
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 import javax.inject.Provider
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 private val TAG = AlarmSchedulerEventReceiver::class.java.simpleName
 
@@ -37,7 +41,7 @@ class AlarmSchedulerEventReceiver : android.content.BroadcastReceiver() {
     lateinit var permissionsRepository: Provider<PermissionsRepository>
 
     @Inject
-    @com.andres.notes.master.di.qualifier.ApplicationGlobalScope
+    @ApplicationGlobalScope
     lateinit var coroutineScope: CoroutineScope
 
     @Inject
@@ -48,8 +52,11 @@ class AlarmSchedulerEventReceiver : android.content.BroadcastReceiver() {
     lateinit var notificationManager: NotificationManager
 
     @Inject
-    @com.andres.notes.master.di.qualifier.BulletPointSymbol
+    @BulletPointSymbol
     lateinit var bulletPointSymbol: String
+
+    @Inject
+    lateinit var json: Json
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context == null || intent == null) return
@@ -118,8 +125,8 @@ class AlarmSchedulerEventReceiver : android.content.BroadcastReceiver() {
         return buildNotification(
             title = textNote.title,
             content = textNote.content,
-            showDate = textNote.reminderDate ?: OffsetDateTime.now(),
-            openItemEditorIntent = getOpenItemEditorPendingIntent(context = context, item = textNote),
+            showDate = textNote.reminderDate ?: Clock.System.now(),
+            openItemEditorIntent = getOpenItemEditorPendingIntent(context = context, item = textNote, json = json),
             hideNotificationIntent = getHideNotificationPendingIntent(context = context, notificationId = notificationId)
         )
     }
@@ -141,9 +148,9 @@ class AlarmSchedulerEventReceiver : android.content.BroadcastReceiver() {
         return buildNotification(
             title = checklist.title,
             content = content,
-            openItemEditorIntent = getOpenItemEditorPendingIntent(context = context, item = checklist),
+            openItemEditorIntent = getOpenItemEditorPendingIntent(context = context, item = checklist, json = json),
             hideNotificationIntent = getHideNotificationPendingIntent(context = context, notificationId = notificationId),
-            showDate = checklist.reminderDate ?: OffsetDateTime.now(),
+            showDate = checklist.reminderDate ?: Clock.System.now(),
         )
     }
 
@@ -152,7 +159,7 @@ class AlarmSchedulerEventReceiver : android.content.BroadcastReceiver() {
         content: String,
         openItemEditorIntent: PendingIntent,
         hideNotificationIntent: PendingIntent,
-        showDate: OffsetDateTime,
+        showDate: Instant,
     ): Notification? {
         Log.d(TAG, "Building notification. Title: $title, content: $content")
         return NotificationCompat.Builder(context, context.getString(R.string.notes_notification_channel_id))
@@ -164,7 +171,7 @@ class AlarmSchedulerEventReceiver : android.content.BroadcastReceiver() {
             .setContentIntent(openItemEditorIntent)
             .setAutoCancel(true)
             .setShowWhen(true)
-            .setWhen(showDate.toInstant().toEpochMilli())
+            .setWhen(showDate.toEpochMilliseconds())
             .addAction(R.drawable.ic_check, context.getString(R.string.done), hideNotificationIntent)
             .build()
     }
@@ -218,9 +225,10 @@ class AlarmSchedulerEventReceiver : android.content.BroadcastReceiver() {
 
         private fun getOpenItemEditorPendingIntent(
             context: Context,
+            json: Json,
             item: ApplicationMainDataType,
         ): PendingIntent {
-            val intent = MainActivity.getOpenItemEditorIntent(context, item)
+            val intent = MainActivity.getOpenItemEditorIntent(context, json, item)
             return PendingIntent.getActivity(
                 context,
                 item.id.toInt(),

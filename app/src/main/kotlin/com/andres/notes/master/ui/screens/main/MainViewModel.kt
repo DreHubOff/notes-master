@@ -47,15 +47,16 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
-import java.time.Duration
-import java.time.OffsetDateTime
 import javax.inject.Inject
+import kotlin.time.Clock
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Instant
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    @ApplicationContext
+    @param:ApplicationContext
     private val context: Context,
-    @ApplicationGlobalScope
+    @param:ApplicationGlobalScope
     private val applicationScope: CoroutineScope,
     private val navigationEventsHost: NavigationEventsHost,
     private val observeApplicationMainType: ObserveApplicationMainTypeInteractor,
@@ -218,9 +219,9 @@ class MainViewModel @Inject constructor(
 
     fun clearTrashOldRecords() {
         viewModelScope.launch(Dispatchers.Default) {
-            if (Duration.between(lastTrashClearOperationTime, OffsetDateTime.now()).toMinutes() > 1) {
+            if (Clock.System.now() - lastTrashClearOperationTime > 1.minutes) {
                 permanentlyDeleteOldTrashRecords()
-                lastTrashClearOperationTime = OffsetDateTime.now()
+                lastTrashClearOperationTime = Clock.System.now()
             }
         }
     }
@@ -497,6 +498,6 @@ class MainViewModel @Inject constructor(
 
     companion object {
 
-        var lastTrashClearOperationTime: OffsetDateTime = OffsetDateTime.MIN
+        var lastTrashClearOperationTime: Instant = Instant.DISTANT_PAST
     }
 }

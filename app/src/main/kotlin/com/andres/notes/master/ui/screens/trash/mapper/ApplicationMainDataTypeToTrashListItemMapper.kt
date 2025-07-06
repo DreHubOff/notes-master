@@ -8,15 +8,14 @@ import com.andres.notes.master.core.model.Checklist
 import com.andres.notes.master.core.model.TextNote
 import com.andres.notes.master.ui.screens.trash.model.TrashListItem
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.time.Duration
-import java.time.OffsetDateTime
 import javax.inject.Inject
 import kotlin.math.roundToInt
+import kotlin.time.Clock
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.toKotlinDuration
+import kotlin.time.Instant
 
 class ApplicationMainDataTypeToTrashListItemMapper @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
 ) {
 
     operator fun invoke(source: ApplicationMainDataType): TrashListItem {
@@ -44,14 +43,14 @@ class ApplicationMainDataTypeToTrashListItemMapper @Inject constructor(
         }
     }
 
-    private fun buildDaysLeftMessage(trashedDate: OffsetDateTime?): String {
+    private fun buildDaysLeftMessage(trashedDate: Instant?): String {
         if (trashedDate == null) {
             // Indicates some error in trashing logic
             return context.getString(R.string.trashed_item_day_left_pattern, -1)
         }
 
-        val currentTime = OffsetDateTime.now()
-        val trashedDuration = Duration.between(trashedDate, currentTime).toKotlinDuration()
+        val currentTime = Clock.System.now()
+        val trashedDuration = currentTime - trashedDate
         val maxLifetime = BuildConfig.TRASH_ITEM_MAX_LIFETIME_SECONDS.seconds
 
         val durationLeft = maxLifetime - trashedDuration

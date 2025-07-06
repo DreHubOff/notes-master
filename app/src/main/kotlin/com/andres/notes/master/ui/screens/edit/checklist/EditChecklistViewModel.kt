@@ -52,9 +52,9 @@ class EditChecklistViewModel @Inject constructor(
     editorFacade: ChecklistEditorFacade,
     permissionsRepository: Provider<PermissionsRepository>,
     private val navigationStateHandle: SavedStateHandle,
-    @ApplicationContext
+    @param:ApplicationContext
     private val context: Context,
-    @ApplicationGlobalScope
+    @param:ApplicationGlobalScope
     private val applicationCoroutineScope: CoroutineScope,
     private val buildPdfFromChecklist: Provider<BuildPdfFromChecklistInteractor>,
     private val buildTextFromChecklist: Provider<BuildTextFromChecklistInteractor>,

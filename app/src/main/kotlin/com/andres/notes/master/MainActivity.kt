@@ -65,6 +65,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 private val TAG = MainActivity::class.java.simpleName
@@ -301,9 +303,13 @@ class MainActivity : ComponentActivity() {
                 ApplicationMainDataType::class.java
             )
 
-        fun getOpenItemEditorIntent(context: Context, item: ApplicationMainDataType): Intent =
+        fun getOpenItemEditorIntent(
+            context: Context,
+            json: Json,
+            item: ApplicationMainDataType,
+            ): Intent =
             Intent(context, MainActivity::class.java)
-                .putExtra(KEY_TARGET_ITEM, item)
+                .putExtra(KEY_TARGET_ITEM, json.encodeToString(item))
                 .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
     }
 }

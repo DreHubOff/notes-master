@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.andres.notes.master.core.model.NoteColor
-import java.time.OffsetDateTime
+import kotlin.time.Instant
 
 const val TEXT_NOTE_TABLE_NAME = "text_note"
 
@@ -21,13 +21,13 @@ data class TextNoteEntity(
     val content: String,
 
     @ColumnInfo(name = "creation_date", typeAffinity = ColumnInfo.INTEGER)
-    val creationDate: OffsetDateTime,
+    val creationDate: Instant,
 
     @ColumnInfo(name = "modification_date", typeAffinity = ColumnInfo.INTEGER)
-    val modificationDate: OffsetDateTime,
+    val modificationDate: Instant,
 
     @ColumnInfo("reminder_date", typeAffinity = ColumnInfo.INTEGER)
-    val reminderDate: OffsetDateTime?,
+    val reminderDate: Instant?,
 
     @ColumnInfo(name = "display_color_resource")
     val displayColorResource: NoteColor?,
@@ -39,7 +39,7 @@ data class TextNoteEntity(
     val isTrashed: Boolean = false,
 
     @ColumnInfo(name = "trashed_date")
-    val trashedDate: OffsetDateTime?,
+    val trashedDate: Instant?,
 
     @ColumnInfo("reminder_posted")
     val reminderHasBeenPosted: Boolean,

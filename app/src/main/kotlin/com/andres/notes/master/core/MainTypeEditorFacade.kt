@@ -1,7 +1,7 @@
 package com.andres.notes.master.core
 
 import com.andres.notes.master.core.model.NoteColor
-import java.time.OffsetDateTime
+import kotlin.time.Instant
 
 interface MainTypeEditorFacade {
 
@@ -17,7 +17,7 @@ interface MainTypeEditorFacade {
 
     suspend fun deleteReminder(itemId: Long)
 
-    suspend fun setReminder(itemId: Long, date: OffsetDateTime)
+    suspend fun setReminder(itemId: Long, date: Instant)
 
     suspend fun saveBackgroundColor(itemId: Long, color: NoteColor?)
 }

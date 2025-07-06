@@ -8,7 +8,7 @@ import com.andres.notes.master.core.model.NoteColor
 import com.andres.notes.master.data.database.table.TEXT_NOTE_TABLE_NAME
 import com.andres.notes.master.data.database.table.TextNoteEntity
 import kotlinx.coroutines.flow.Flow
-import java.time.OffsetDateTime
+import kotlin.time.Instant
 
 @Dao
 interface TextNoteDao {
@@ -35,7 +35,7 @@ interface TextNoteDao {
     suspend fun updateContentById(id: Long, newContent: String)
 
     @Query("UPDATE $TEXT_NOTE_TABLE_NAME SET modification_date = :newDate WHERE id = :id")
-    suspend fun updateModificationDateById(id: Long, newDate: OffsetDateTime)
+    suspend fun updateModificationDateById(id: Long, newDate: Instant)
 
     @Insert
     suspend fun insertTextNote(textNote: TextNoteEntity): Long
@@ -53,10 +53,10 @@ interface TextNoteDao {
     suspend fun updateIsTrashedById(id: Long, isTrashed: Boolean)
 
     @Query("UPDATE $TEXT_NOTE_TABLE_NAME SET trashed_date = :date WHERE id = :id")
-    suspend fun updateTrashedDateById(id: Long, date: OffsetDateTime?)
+    suspend fun updateTrashedDateById(id: Long, date: Instant?)
 
     @Query("UPDATE $TEXT_NOTE_TABLE_NAME SET reminder_date = :date WHERE id = :id")
-    suspend fun updateReminderDateById(id: Long, date: OffsetDateTime?)
+    suspend fun updateReminderDateById(id: Long, date: Instant?)
 
     @Query("UPDATE $TEXT_NOTE_TABLE_NAME SET reminder_posted = :isShown WHERE id = :id")
     suspend fun updateChecklistReminderShownState(id: Long, isShown: Boolean)

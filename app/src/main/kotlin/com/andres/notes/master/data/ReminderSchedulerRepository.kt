@@ -11,13 +11,13 @@ import javax.inject.Inject
 private val TAG = ReminderSchedulerRepository::class.java.simpleName
 
 class ReminderSchedulerRepository @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val alarmManager: AlarmManager,
 ) {
 
     fun scheduleReminder(target: ApplicationMainDataType) {
         val reminderDate = target.reminderDate ?: return
-        val triggerTimeMillis = reminderDate.toEpochSecond().times(1000)
+        val triggerTimeMillis = reminderDate.toEpochMilliseconds()
         val operation = buildPendingIntent(target)
         Log.d(TAG, "Scheduling reminder for $target at $reminderDate")
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTimeMillis, operation)

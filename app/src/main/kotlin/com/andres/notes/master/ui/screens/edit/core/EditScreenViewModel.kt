@@ -51,29 +51,63 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.format.MonthNames
+import kotlinx.datetime.format.Padding
+import kotlinx.datetime.format.char
+import kotlinx.datetime.toInstant
+import kotlinx.datetime.toLocalDateTime
 import java.io.File
-import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 import javax.inject.Provider
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 abstract class EditScreenViewModel<State : EditScreenState<State>, Item : ApplicationMainDataType>(
     private val navigationEventsHost: NavigationEventsHost,
     private val editorFacade: MainTypeEditorFacade,
-    @ApplicationGlobalScope private val applicationCoroutineScope: CoroutineScope,
-    @ApplicationContext private val context: Context,
+    @param:ApplicationGlobalScope private val applicationCoroutineScope: CoroutineScope,
+    @param:ApplicationContext private val context: Context,
     private val buildModificationDateText: Lazy<BuildModificationDateTextInteractor>,
     private val shareTextIntentBuilder: Provider<ShareTextIntentBuilder>,
     private val shareFileIntentBuilder: Provider<ShareFileIntentBuilder>,
     private val permissionsRepository: Provider<PermissionsRepository>,
 ) : ViewModel() {
 
-    private val reminderEditorDateFormat by lazy { DateTimeFormatter.ofPattern("d MMM, yyyy", Locale.getDefault()) }
-    private val reminderEditorTimeFormat by lazy { DateTimeFormatter.ofPattern("h:mm a", Locale.getDefault()) }
+    private val reminderEditorDateFormat by lazy {
+        LocalDateTime.Format {
+            day(padding = Padding.NONE)
+            char(' ')
+            monthName(MonthNames.ENGLISH_ABBREVIATED)
+            chars(", ")
+            year()
+        }
+    }
+    private val reminderEditorTimeFormat by lazy {
+        LocalDateTime.Format {
+            hour(padding = Padding.NONE);
+            char(':')
+            minute()
+            char(' ')
+            amPmMarker("am", "pm")
+        }
+    }
 
-    private val reminderDateTimeFormat by lazy { DateTimeFormatter.ofPattern("d MMM, h:mm a", Locale.getDefault()) }
+    private val reminderDateTimeFormat by lazy {
+        LocalDateTime.Format {
+            day(padding = Padding.NONE)
+            char(' ')
+            monthName(MonthNames.ENGLISH_ABBREVIATED)
+            chars(", ")
+            hour(padding = Padding.NONE)
+            char(':')
+            minute(padding = Padding.NONE)
+            char(' ')
+            amPmMarker(am = "am", pm = "pm")
+        }
+    }
 
     private var firstItemCache: Item? = null
 
@@ -279,7 +313,10 @@ abstract class EditScreenViewModel<State : EditScreenState<State>, Item : Applic
         applicationCoroutineScope.launch {
             val editorData = _state.value.reminderEditorData ?: return@launch
             val zonedDate = editorData.asZonedDateTime()
-            editorFacade.setReminder(itemId = _state.value.itemId, date = zonedDate)
+            editorFacade.setReminder(
+                itemId = _state.value.itemId,
+                date = zonedDate.toInstant(TimeZone.currentSystemDefault()),
+            )
         }
     }
 
@@ -313,7 +350,8 @@ abstract class EditScreenViewModel<State : EditScreenState<State>, Item : Applic
             _state.update { oldState ->
                 val oldEditor = oldState.reminderEditorData
                 val newEditor = oldEditor?.copy(dateMillis = dateMillis)
-                val zonedDate = newEditor?.asZonedDateTime() ?: OffsetDateTime.now()
+                val zonedDate = newEditor?.asZonedDateTime()
+                    ?: Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
                 val editorData = buildReminderEditorDataForDate(date = zonedDate, isNewReminder = oldState.reminderData == null)
                 oldState.copy(
                     reminderEditorData = editorData,
@@ -438,10 +476,11 @@ abstract class EditScreenViewModel<State : EditScreenState<State>, Item : Applic
         }
     }
 
-    private fun buildReminderData(reminderDate: OffsetDateTime?, screenBackground: NoteColor?): ReminderStateData? {
+    private fun buildReminderData(reminderDate: Instant?, screenBackground: NoteColor?): ReminderStateData? {
         if (reminderDate == null) return null
-        val dateText = reminderDateTimeFormat.format(reminderDate)
-        val outdated = reminderDate.isBefore(OffsetDateTime.now())
+        val localDateTime = reminderDate.toLocalDateTime(TimeZone.currentSystemDefault())
+        val dateText = reminderDateTimeFormat.format(localDateTime)
+        val outdated = reminderDate < Clock.System.now()
         return ReminderStateData(
             sourceDate = reminderDate,
             dateString = if (outdated) dateText.asStrikethroughText() else AnnotatedString(dateText),
@@ -452,21 +491,22 @@ abstract class EditScreenViewModel<State : EditScreenState<State>, Item : Applic
     }
 
     private fun buildReminderEditorDataForState(state: State): ReminderEditorData {
-        val zonedDate = state.reminderEditorData?.asZonedDateTime() ?: OffsetDateTime.now()
+        val zonedDate = state.reminderEditorData?.asZonedDateTime()
+            ?: Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
         return buildReminderEditorDataForDate(date = zonedDate, isNewReminder = state.reminderData == null)
     }
 
     private fun buildReminderEditorDataForDate(
-        date: OffsetDateTime,
+        date: LocalDateTime,
         isNewReminder: Boolean,
     ): ReminderEditorData {
         val zoneOffsetSeconds = ZonedDateTime.now(ZoneId.systemDefault()).offset.totalSeconds
-        val dateMillis = (date.toEpochSecond() + zoneOffsetSeconds) * 1000
+        val dateMillis = (date.toInstant(TimeZone.currentSystemDefault()).epochSeconds + zoneOffsetSeconds) * 1000
         val editorData = ReminderEditorData(
             isNewReminder = isNewReminder,
             dateMillis = dateMillis,
-            dateString = reminderEditorDateFormat.format(date.toLocalDate()),
-            timeString = reminderEditorTimeFormat.format(date.toLocalTime()),
+            dateString = reminderEditorDateFormat.format(date),
+            timeString = reminderEditorTimeFormat.format(date),
             hourOfDay = date.hour,
             minuteOfHour = date.minute,
         )

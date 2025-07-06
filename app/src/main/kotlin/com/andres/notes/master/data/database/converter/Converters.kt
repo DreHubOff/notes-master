@@ -2,26 +2,15 @@ package com.andres.notes.master.data.database.converter
 
 import androidx.room.TypeConverter
 import com.andres.notes.master.core.model.NoteColor
-import java.time.Instant
-import java.time.OffsetDateTime
-import java.time.ZoneId
+import kotlin.time.Instant
 
 class Converters {
 
     @TypeConverter
-    fun fromLocalDateTime(value: OffsetDateTime?): Long? {
-        return value?.toEpochSecond()
-    }
+    fun fromInstant(value: Instant?): Long? = value?.epochSeconds
 
     @TypeConverter
-    fun toLocalDateTime(value: Long?): OffsetDateTime? {
-        return value?.let {
-            OffsetDateTime.ofInstant(
-                Instant.ofEpochSecond(it),
-                ZoneId.systemDefault()
-            )
-        }
-    }
+    fun toInstant(value: Long?): Instant? = value?.let(Instant::fromEpochSeconds)
 
     @TypeConverter
     fun fromNoteColor(color: NoteColor): String = color.name

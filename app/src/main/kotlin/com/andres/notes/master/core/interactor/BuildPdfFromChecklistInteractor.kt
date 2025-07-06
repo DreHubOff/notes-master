@@ -17,11 +17,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
-import kotlin.collections.plusAssign
+import kotlin.time.toJavaInstant
 
 class BuildPdfFromChecklistInteractor @Inject constructor(
-    @ApplicationContext private val context: Context,
-    @BulletPointSymbol private val bulletPointSymbol: String,
+    @param:ApplicationContext private val context: Context,
+    @param:BulletPointSymbol private val bulletPointSymbol: String,
     private val checklistRepository: ChecklistRepository,
     private val fileManagerRepository: FileManagerRepository,
 ) {
@@ -84,6 +84,6 @@ class BuildPdfFromChecklistInteractor @Inject constructor(
 
     private fun buildPdfName(checklist: Checklist): String {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")
-        return "Checklist_${formatter.format(checklist.creationDate)}.pdf"
+        return "Checklist_${formatter.format(checklist.creationDate.toJavaInstant())}.pdf"
     }
 }

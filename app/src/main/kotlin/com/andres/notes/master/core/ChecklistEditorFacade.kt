@@ -3,8 +3,8 @@ package com.andres.notes.master.core
 import com.andres.notes.master.core.model.NoteColor
 import com.andres.notes.master.data.ChecklistRepository
 import com.andres.notes.master.data.ReminderSchedulerRepository
-import java.time.OffsetDateTime
 import javax.inject.Inject
+import kotlin.time.Instant
 
 class ChecklistEditorFacade @Inject constructor(
     private val checklistRepository: ChecklistRepository,
@@ -38,7 +38,7 @@ class ChecklistEditorFacade @Inject constructor(
         checklistRepository.deleteReminder(itemId)
     }
 
-    override suspend fun setReminder(itemId: Long, date: OffsetDateTime) {
+    override suspend fun setReminder(itemId: Long, date: Instant) {
         checklistRepository.storeReminderDate(itemId, date)
         val item = checklistRepository.getChecklistById(itemId) ?: return
         checklistRepository.updateChecklistReminderShownState(itemId, isShown = false)

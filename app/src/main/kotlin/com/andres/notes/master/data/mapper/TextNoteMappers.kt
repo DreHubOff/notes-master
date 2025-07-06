@@ -19,8 +19,8 @@ fun TextNoteEntity.toDomain(): TextNote {
     )
 }
 
-fun com.andres.notes.master.core.model.TextNote.toEntity(): com.andres.notes.master.data.database.table.TextNoteEntity {
-    return _root_ide_package_.com.andres.notes.master.data.database.table.TextNoteEntity(
+fun TextNote.toEntity(): TextNoteEntity {
+    return TextNoteEntity(
         id = id,
         title = title,
         content = content,

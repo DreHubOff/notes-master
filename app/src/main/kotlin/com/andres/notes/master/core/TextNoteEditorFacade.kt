@@ -3,8 +3,8 @@ package com.andres.notes.master.core
 import com.andres.notes.master.core.model.NoteColor
 import com.andres.notes.master.data.ReminderSchedulerRepository
 import com.andres.notes.master.data.TextNotesRepository
-import java.time.OffsetDateTime
 import javax.inject.Inject
+import kotlin.time.Instant
 
 class TextNoteEditorFacade @Inject constructor(
     private val textNotesRepository: TextNotesRepository,
@@ -38,7 +38,7 @@ class TextNoteEditorFacade @Inject constructor(
         textNotesRepository.deleteReminder(itemId)
     }
 
-    override suspend fun setReminder(itemId: Long, date: OffsetDateTime) {
+    override suspend fun setReminder(itemId: Long, date: Instant) {
         textNotesRepository.storeReminderDate(itemId, date)
         val note = textNotesRepository.getNoteById(itemId) ?: return
         textNotesRepository.updateChecklistReminderShownState(note.id, isShown = false)

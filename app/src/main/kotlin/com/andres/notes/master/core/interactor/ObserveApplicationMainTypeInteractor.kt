@@ -2,7 +2,6 @@ package com.andres.notes.master.core.interactor
 
 import com.andres.notes.master.core.model.ApplicationMainDataType
 import com.andres.notes.master.core.model.Checklist
-import com.andres.notes.master.core.model.SortableListItem
 import com.andres.notes.master.core.model.TextNote
 import com.andres.notes.master.data.ChecklistRepository
 import com.andres.notes.master.data.TextNotesRepository
@@ -54,7 +53,7 @@ class ObserveApplicationMainTypeInteractor @Inject constructor(
         return true
     }
 
-    private fun <T : SortableListItem> Sequence<T>.sortedByPinnedAndModificationDate(): Sequence<T> {
+    private fun <T : ApplicationMainDataType> Sequence<T>.sortedByPinnedAndModificationDate(): Sequence<T> {
         return this.sortedWith(compareByDescending<T> { it.isPinned }.thenByDescending { it.creationDate })
     }
 }
