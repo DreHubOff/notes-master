@@ -12,10 +12,12 @@ import com.wwdablu.soumya.simplypdf.composers.properties.TextProperties
 import com.wwdablu.soumya.simplypdf.document.DocumentInfo
 import com.wwdablu.soumya.simplypdf.document.Margin
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.datetime.format
+import kotlinx.datetime.format.DateTimeComponents
+import kotlinx.datetime.format.Padding
+import kotlinx.datetime.format.char
 import java.io.File
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
-import kotlin.time.toJavaInstant
 
 class BuildPdfFromTextNoteInteractor @Inject constructor(
     @param:ApplicationContext private val context: Context,
@@ -60,7 +62,19 @@ class BuildPdfFromTextNoteInteractor @Inject constructor(
     }
 
     private fun buildPdfName(textNote: TextNote): String {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")
-        return "Note_${formatter.format(textNote.creationDate.toJavaInstant())}.pdf"
+        val formatter = DateTimeComponents.Format {
+            year()
+            char('-')
+            monthNumber(Padding.ZERO)
+            char('-')
+            day(Padding.ZERO)
+            char('_')
+            hour(Padding.ZERO)
+            char('-')
+            minute(Padding.ZERO)
+            char('-')
+            second(Padding.ZERO)
+        }
+        return "Note_${textNote.creationDate.format(formatter)}.pdf"
     }
 }
