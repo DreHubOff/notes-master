@@ -1,7 +1,6 @@
 package com.andres.notes.master.ui.screens.main.actionbar
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -10,6 +9,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Palette
 import androidx.compose.material.icons.sharp.Close
 import androidx.compose.material.icons.sharp.Menu
+import androidx.compose.material.icons.sharp.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -95,15 +95,7 @@ fun MainTopAppBar(
                 }
 
                 else -> {
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable(enabled = true, onClick = { onIntent(MainActionBarIntent.OpenSearch) }),
-                        text = stringResource(id = R.string.search_notes),
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Medium,
-                    )
+                    // Empty title
                 }
             }
         },
@@ -123,6 +115,10 @@ fun MainTopAppBar(
                         painter = painterResource(R.drawable.ic_delete),
                         contentDescription = stringResource(R.string.action_delete),
                     )
+                }
+            } else if (!state.searchEnabled) {
+                IconButton(onClick = { onIntent(MainActionBarIntent.OpenSearch) }) {
+                    Icon(imageVector = Icons.Sharp.Search, contentDescription = null)
                 }
             }
         }
