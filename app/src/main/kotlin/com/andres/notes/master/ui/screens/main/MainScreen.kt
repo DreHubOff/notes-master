@@ -24,10 +24,9 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -225,7 +224,6 @@ private fun DisplayState(
     onTextNoteSelected: (MainScreenItem.TextNote) -> Unit,
     onChecklistSelected: (MainScreenItem.Checklist) -> Unit,
 ) {
-    val listScrollState = rememberLazyListState()
     val isEmptyListState = state.screenItems.isEmpty() && state !== MainScreenState.Companion.EMPTY
 
     Column(
@@ -243,7 +241,6 @@ private fun DisplayState(
         List(
             state = state,
             containerPadding = contentPadding,
-            listScrollState = listScrollState,
             onChecklistSelected = onChecklistSelected,
             openCheckListEditor = openCheckListEditor,
             onTextNoteSelected = onTextNoteSelected,
@@ -262,20 +259,20 @@ private fun DisplayState(
 @Composable
 private fun List(
     containerPadding: PaddingValues,
-    listScrollState: LazyListState,
     state: MainScreenState,
     onChecklistSelected: (MainScreenItem.Checklist) -> Unit,
     openCheckListEditor: (MainScreenItem.Checklist?) -> Unit,
     onTextNoteSelected: (MainScreenItem.TextNote) -> Unit,
     openTextNoteEditor: (MainScreenItem.TextNote?) -> Unit,
 ) {
-    LazyColumn(
+    LazyVerticalStaggeredGrid(
+        columns = StaggeredGridCells.Adaptive(minSize = 250.dp),
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(),
         contentPadding = containerPadding,
-        verticalArrangement = spacedBy(8.dp),
-        state = listScrollState,
+        verticalItemSpacing = 8.dp,
+        horizontalArrangement = spacedBy(8.dp),
         userScrollEnabled = state.screenItems.isNotEmpty(),
     ) {
         items(state.screenItems, key = { it.compositeKey }) { item ->
