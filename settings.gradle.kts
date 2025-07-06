@@ -1,5 +1,6 @@
 pluginManagement {
     repositories {
+        includeBuild("build-script")
         google {
             content {
                 includeGroupByRegex("com\\.android.*")
