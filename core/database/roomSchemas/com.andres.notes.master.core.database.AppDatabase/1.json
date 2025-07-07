@@ -1,0 +1,223 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "2511b91ebeacf1f43217323b531febe2",
+    "entities": [
+      {
+        "tableName": "text_note",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `content` TEXT NOT NULL, `creation_date` INTEGER NOT NULL, `modification_date` INTEGER NOT NULL, `reminder_date` INTEGER, `display_color_resource` TEXT, `pinned` INTEGER NOT NULL, `is_trashed` INTEGER NOT NULL, `trashed_date` INTEGER, `reminder_posted` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "creationDate",
+            "columnName": "creation_date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "modificationDate",
+            "columnName": "modification_date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminderDate",
+            "columnName": "reminder_date",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "displayColorResource",
+            "columnName": "display_color_resource",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isPinned",
+            "columnName": "pinned",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isTrashed",
+            "columnName": "is_trashed",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "trashedDate",
+            "columnName": "trashed_date",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "reminderHasBeenPosted",
+            "columnName": "reminder_posted",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "checklists",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `creation_date` INTEGER NOT NULL, `modification_date` INTEGER NOT NULL, `reminder_date` INTEGER, `pinned` INTEGER NOT NULL, `background_color` TEXT, `is_trashed` INTEGER NOT NULL, `trashed_date` INTEGER, `reminder_posted` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "creationDate",
+            "columnName": "creation_date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "modificationDate",
+            "columnName": "modification_date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reminderDate",
+            "columnName": "reminder_date",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "isPinned",
+            "columnName": "pinned",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "backgroundColor",
+            "columnName": "background_color",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isTrashed",
+            "columnName": "is_trashed",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "trashedDate",
+            "columnName": "trashed_date",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "reminderHasBeenPosted",
+            "columnName": "reminder_posted",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "checklist_items",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `checklist_id` INTEGER NOT NULL, `title` TEXT NOT NULL, `is_checked` INTEGER NOT NULL, `list_position` INTEGER NOT NULL, FOREIGN KEY(`checklist_id`) REFERENCES `checklists`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "checklistId",
+            "columnName": "checklist_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isChecked",
+            "columnName": "is_checked",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "listPosition",
+            "columnName": "list_position",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_checklist_items_checklist_id",
+            "unique": false,
+            "columnNames": [
+              "checklist_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_checklist_items_checklist_id` ON `${TABLE_NAME}` (`checklist_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "checklists",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "checklist_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2511b91ebeacf1f43217323b531febe2')"
+    ]
+  }
+}

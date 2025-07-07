@@ -1,12 +1,12 @@
-package com.andres.notes.master.data.database.dao
+package com.andres.notes.master.core.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.andres.notes.master.data.database.table.CHECKLIST_ITEMS_TABLE_NAME
-import com.andres.notes.master.data.database.table.ChecklistItemEntity
+import com.andres.notes.master.core.database.table.CHECKLIST_ITEMS_TABLE_NAME
+import com.andres.notes.master.core.database.table.ChecklistItemEntity
 
 @Dao
 interface ChecklistItemDao {

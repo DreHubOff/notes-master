@@ -18,8 +18,10 @@ kotlin {
 }
 
 dependencies {
+    compileOnly(libs.room.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.android.gradlePlugin)
+    compileOnly(libs.ksp.gradlePlugin)
 }
 
 tasks {
@@ -34,6 +36,14 @@ gradlePlugin {
         register("kmpModule") {
             id = libs.plugins.convention.kmpModule.get().pluginId
             implementationClass = "KMPModuleConventionPlugin"
+        }
+        register("roomSetupPlugin") {
+            id = libs.plugins.convention.room.get().pluginId
+            implementationClass = "RoomConventionPlugin"
+        }
+        register("suppressWarningsPlugin") {
+            id = libs.plugins.convention.suppressWarnings.get().pluginId
+            implementationClass = "SuppressWarningsPlugin"
         }
     }
 }

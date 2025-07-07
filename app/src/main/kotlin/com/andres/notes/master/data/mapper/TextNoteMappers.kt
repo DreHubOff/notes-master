@@ -1,7 +1,7 @@
 package com.andres.notes.master.data.mapper
 
+import com.andres.notes.master.core.database.table.TextNoteEntity
 import com.andres.notes.master.core.model.TextNote
-import com.andres.notes.master.data.database.table.TextNoteEntity
 
 fun TextNoteEntity.toDomain(): TextNote {
     return TextNote(

@@ -1,10 +1,10 @@
-package com.andres.notes.master.data.database.converter
+package com.andres.notes.master.core.database.converter
 
 import androidx.room.TypeConverter
 import com.andres.notes.master.core.model.NoteColor
 import kotlin.time.Instant
 
-class Converters {
+internal class Converters {
 
     @TypeConverter
     fun fromInstant(value: Instant?): Long? = value?.epochSeconds

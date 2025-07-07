@@ -1,4 +1,4 @@
-package com.andres.notes.master.data.database.table
+package com.andres.notes.master.core.database.table
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

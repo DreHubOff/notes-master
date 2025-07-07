@@ -1,13 +1,13 @@
 package com.andres.notes.master.data
 
 import androidx.room.withTransaction
+import com.andres.notes.master.core.database.AppDatabase
+import com.andres.notes.master.core.database.dao.ChecklistDao
+import com.andres.notes.master.core.database.dao.ChecklistItemDao
+import com.andres.notes.master.core.database.table.ChecklistWithItems
 import com.andres.notes.master.core.model.Checklist
 import com.andres.notes.master.core.model.ChecklistItem
 import com.andres.notes.master.core.model.NoteColor
-import com.andres.notes.master.data.database.AppDatabase
-import com.andres.notes.master.data.database.dao.ChecklistDao
-import com.andres.notes.master.data.database.dao.ChecklistItemDao
-import com.andres.notes.master.data.database.table.ChecklistWithItems
 import com.andres.notes.master.data.mapper.toDomain
 import com.andres.notes.master.data.mapper.toEntity
 import kotlinx.coroutines.NonCancellable

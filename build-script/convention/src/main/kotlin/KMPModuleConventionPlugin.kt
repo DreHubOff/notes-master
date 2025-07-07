@@ -1,19 +1,24 @@
 import com.andres.notes.master.AndroidBuildDefaults
 import com.andres.notes.master.androidLibrary
 import com.andres.notes.master.kotlin
+import com.andres.notes.master.library
+import com.andres.notes.master.libs
+import com.andres.notes.master.plugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.apply
 
 class KMPModuleConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            pluginManager.apply("com.android.kotlin.multiplatform.library")
-            pluginManager.apply("org.jetbrains.kotlin.multiplatform")
+            apply(plugin = libs.plugin("android-kotlin-multiplatform-library").pluginId)
+            apply(plugin = libs.plugin("kotlin-multiplatform").pluginId)
 
             kotlin {
+                jvm()
                 androidLibrary {
-                    compileSdk = AndroidBuildDefaults.compileSdk
-                    minSdk = AndroidBuildDefaults.minSdk
+                    compileSdk = AndroidBuildDefaults.COMPILE_SDK
+                    minSdk = AndroidBuildDefaults.MIN_SDK
                 }
 
                 val xcfName = "${target.displayName.replace("'", "")}Kit"
@@ -33,6 +38,10 @@ class KMPModuleConventionPlugin : Plugin<Project> {
                     binaries.framework {
                         baseName = xcfName
                     }
+                }
+
+                sourceSets.commonMain.dependencies {
+                    implementation(libs.library("kotlin.stdlib"))
                 }
             }
         }

@@ -1,10 +1,10 @@
 package com.andres.notes.master.data
 
 import androidx.room.withTransaction
+import com.andres.notes.master.core.database.AppDatabase
+import com.andres.notes.master.core.database.dao.TextNoteDao
 import com.andres.notes.master.core.model.NoteColor
 import com.andres.notes.master.core.model.TextNote
-import com.andres.notes.master.data.database.AppDatabase
-import com.andres.notes.master.data.database.dao.TextNoteDao
 import com.andres.notes.master.data.mapper.toDomain
 import com.andres.notes.master.data.mapper.toEntity
 import kotlinx.coroutines.NonCancellable

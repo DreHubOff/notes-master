@@ -24,3 +24,4 @@ dependencyResolutionManagement {
 rootProject.name = "Notes Master"
 include(":app")
 include(":core:model")
+include(":core:database")

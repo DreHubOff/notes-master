@@ -1,4 +1,4 @@
-package com.andres.notes.master.data.database.dao
+package com.andres.notes.master.core.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,10 +6,10 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import com.andres.notes.master.core.database.table.CHECKLIST_TABLE_NAME
+import com.andres.notes.master.core.database.table.ChecklistEntity
+import com.andres.notes.master.core.database.table.ChecklistWithItems
 import com.andres.notes.master.core.model.NoteColor
-import com.andres.notes.master.data.database.table.CHECKLIST_TABLE_NAME
-import com.andres.notes.master.data.database.table.ChecklistEntity
-import com.andres.notes.master.data.database.table.ChecklistWithItems
 import kotlinx.coroutines.flow.Flow
 import kotlin.time.Instant
 

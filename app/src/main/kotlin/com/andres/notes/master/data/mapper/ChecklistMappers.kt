@@ -1,10 +1,10 @@
 package com.andres.notes.master.data.mapper
 
+import com.andres.notes.master.core.database.table.ChecklistEntity
+import com.andres.notes.master.core.database.table.ChecklistItemEntity
+import com.andres.notes.master.core.database.table.ChecklistWithItems
 import com.andres.notes.master.core.model.Checklist
 import com.andres.notes.master.core.model.ChecklistItem
-import com.andres.notes.master.data.database.table.ChecklistEntity
-import com.andres.notes.master.data.database.table.ChecklistItemEntity
-import com.andres.notes.master.data.database.table.ChecklistWithItems
 
 fun ChecklistWithItems.toDomain(): Checklist {
     return Checklist(

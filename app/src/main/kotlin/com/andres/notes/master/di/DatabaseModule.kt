@@ -2,10 +2,10 @@ package com.andres.notes.master.di
 
 import android.content.Context
 import androidx.room.Room
-import com.andres.notes.master.data.database.AppDatabase
-import com.andres.notes.master.data.database.dao.ChecklistDao
-import com.andres.notes.master.data.database.dao.ChecklistItemDao
-import com.andres.notes.master.data.database.dao.TextNoteDao
+import com.andres.notes.master.core.database.AppDatabase
+import com.andres.notes.master.core.database.dao.ChecklistDao
+import com.andres.notes.master.core.database.dao.ChecklistItemDao
+import com.andres.notes.master.core.database.dao.TextNoteDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

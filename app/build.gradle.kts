@@ -1,3 +1,5 @@
+import com.andres.notes.master.AndroidBuildDefaults
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,28 +7,21 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.convention.suppressWarnings)
     id("kotlin-parcelize")
 }
 
 kotlin {
     jvmToolchain(17)
-
-    sourceSets {
-        all {
-            languageSettings {
-                optIn("kotlin.time.ExperimentalTime")
-            }
-        }
-    }
 }
 
 android {
     namespace = "com.andres.notes.master"
-    compileSdk = 36
+    compileSdk = AndroidBuildDefaults.COMPILE_SDK
 
     defaultConfig {
         applicationId = "com.andres.notes.master"
-        minSdk = 26
+        minSdk = AndroidBuildDefaults.MIN_SDK
         versionCode = 1_0_0
         versionName = "1.0.0"
         val fileProviderAuthority = "${applicationId}.fileprovider"
@@ -54,6 +49,7 @@ android {
 dependencies {
 
     implementation(project(":core:model"))
+    implementation(project(":core:database"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
