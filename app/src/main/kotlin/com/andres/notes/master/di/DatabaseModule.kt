@@ -24,9 +24,7 @@ object DatabaseModule {
             context,
             AppDatabase::class.java,
             AppDatabase.Companion.DB_NAME,
-        )
-            .fallbackToDestructiveMigration(dropAllTables = true)
-            .build()
+        ).build()
     }
 
     @Provides
