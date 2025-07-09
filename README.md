@@ -10,8 +10,10 @@ It’s now undergoing a major **refactor and modernization**, with the following
 3. Add support for **voice recordings** in notes.
 4. Implement **voice transcription** functionality.
 
+> This transformation aims to make the app scalable, maintainable, and more feature-rich across platforms.
+
 ### 🎬 Preview
 
-[![Demo video](demo/front_page.png)](demo/demo_video.webm)
+<img src="demo/front_page.png" alt="Front page" width="400"/>
 
-> This transformation aims to make the app scalable, maintainable, and more feature-rich across platforms.
+[Short example]([demo/demo_video.webm](https://github.com/user-attachments/assets/4b05c860-702f-4d45-be01-1f5e545b35e1))
