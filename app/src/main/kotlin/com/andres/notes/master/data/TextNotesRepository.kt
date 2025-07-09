@@ -1,7 +1,5 @@
 package com.andres.notes.master.data
 
-import androidx.room.withTransaction
-import com.andres.notes.master.core.database.AppDatabase
 import com.andres.notes.master.core.database.dao.TextNoteDao
 import com.andres.notes.master.core.model.NoteColor
 import com.andres.notes.master.core.model.TextNote
@@ -17,7 +15,6 @@ import kotlin.time.Clock
 import kotlin.time.Instant
 
 class TextNotesRepository @Inject constructor(
-    private val database: AppDatabase,
     private val textNoteDao: TextNoteDao,
 ) {
 
@@ -56,46 +53,36 @@ class TextNotesRepository @Inject constructor(
 
     suspend fun storePinnedSate(pinned: Boolean, itemId: Long) {
         withContext(NonCancellable) {
-            database.withTransaction {
-                textNoteDao.updatePinnedStateById(id = itemId, pinned = pinned)
-            }
+            textNoteDao.updatePinnedStateById(id = itemId, pinned = pinned)
         }
     }
 
     suspend fun storeNewTitle(title: String, itemId: Long) {
         withContext(NonCancellable) {
-            database.withTransaction {
-                textNoteDao.updateTitleById(id = itemId, newTitle = title)
-                textNoteDao.updateModificationDateById(id = itemId, newDate = Clock.System.now())
-            }
+            textNoteDao.updateTitleById(id = itemId, newTitle = title)
+            textNoteDao.updateModificationDateById(id = itemId, newDate = Clock.System.now())
         }
     }
 
     suspend fun storeNewContent(content: String, itemId: Long) {
         withContext(NonCancellable) {
-            database.withTransaction {
-                textNoteDao.updateContentById(id = itemId, newContent = content)
-                textNoteDao.updateModificationDateById(id = itemId, newDate = Clock.System.now())
-            }
+            textNoteDao.updateContentById(id = itemId, newContent = content)
+            textNoteDao.updateModificationDateById(id = itemId, newDate = Clock.System.now())
         }
     }
 
     suspend fun moveToTrash(itemId: Long) {
         withContext(NonCancellable) {
-            database.withTransaction {
-                textNoteDao.updateIsTrashedById(id = itemId, isTrashed = true)
-                textNoteDao.updateTrashedDateById(id = itemId, date = Clock.System.now())
-                textNoteDao.updatePinnedStateById(id = itemId, pinned = false)
-            }
+            textNoteDao.updateIsTrashedById(id = itemId, isTrashed = true)
+            textNoteDao.updateTrashedDateById(id = itemId, date = Clock.System.now())
+            textNoteDao.updatePinnedStateById(id = itemId, pinned = false)
         }
     }
 
     suspend fun restoreItemFromTrash(itemId: Long) {
         withContext(NonCancellable) {
-            database.withTransaction {
-                textNoteDao.updateIsTrashedById(id = itemId, isTrashed = false)
-                textNoteDao.updateTrashedDateById(id = itemId, date = null)
-            }
+            textNoteDao.updateIsTrashedById(id = itemId, isTrashed = false)
+            textNoteDao.updateTrashedDateById(id = itemId, date = null)
         }
     }
 

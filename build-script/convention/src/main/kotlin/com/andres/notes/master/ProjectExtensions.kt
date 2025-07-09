@@ -1,14 +1,16 @@
 package com.andres.notes.master
 
+import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.Action
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalog
-import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.plugins.ExtensionAware
-import org.gradle.kotlin.dsl.getByType
+import org.gradle.api.plugins.PluginManager
+import org.gradle.kotlin.dsl.accessors.runtime.extensionOf
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-internal val Project.libs: VersionCatalog get() = extensions.getByType<VersionCatalogsExtension>().named("libs")
+internal fun Project.pluginManager(configure: PluginManager.() -> Unit): Unit = pluginManager.configure()
 
-internal fun Project.kotlin(configure: Action<KotlinMultiplatformExtension>): Unit =
+internal val Project.libs: LibrariesForLibs get() = extensionOf(this, "libs") as LibrariesForLibs
+
+internal fun Project.kotlinMultiplatformExtension(configure: Action<KotlinMultiplatformExtension>): Unit =
     (this as ExtensionAware).extensions.configure("kotlin", configure)

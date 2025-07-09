@@ -1,7 +1,5 @@
 package com.andres.notes.master.data
 
-import androidx.room.withTransaction
-import com.andres.notes.master.core.database.AppDatabase
 import com.andres.notes.master.core.database.dao.ChecklistDao
 import com.andres.notes.master.core.database.dao.ChecklistItemDao
 import com.andres.notes.master.core.database.table.ChecklistWithItems
@@ -20,7 +18,6 @@ import kotlin.time.Clock
 import kotlin.time.Instant
 
 class ChecklistRepository @Inject constructor(
-    private val database: AppDatabase,
     private val checklistDao: ChecklistDao,
     private val checklistItemDao: ChecklistItemDao,
 ) {
@@ -77,50 +74,40 @@ class ChecklistRepository @Inject constructor(
 
     suspend fun saveChecklistItemAsLast(checklistId: Long, item: ChecklistItem): ChecklistItem {
         val (insertedItemId, newPosition) = withContext(NonCancellable) {
-            database.withTransaction {
-                val newPosition = (checklistItemDao.getLastListPosition(checklistId) ?: -1) + 1
-                val itemToSave = item.copy(listPosition = newPosition).toEntity(parentChecklistId = checklistId)
-                checklistDao.updateChecklistModifiedDateById(id = checklistId, date = Clock.System.now())
-                checklistItemDao.insertChecklistItem(itemToSave) to newPosition
-            }
+            val newPosition = (checklistItemDao.getLastListPosition(checklistId) ?: -1) + 1
+            val itemToSave = item.copy(listPosition = newPosition).toEntity(parentChecklistId = checklistId)
+            checklistDao.updateChecklistModifiedDateById(id = checklistId, date = Clock.System.now())
+            checklistItemDao.insertChecklistItem(itemToSave) to newPosition
         }
         return item.copy(id = insertedItemId, listPosition = newPosition)
     }
 
     suspend fun updateChecklistItemCheckedState(isChecked: Boolean, itemId: Long, checklistId: Long) {
         withContext(NonCancellable) {
-            database.withTransaction {
-                checklistItemDao.updateCheckedStateByIds(checked = isChecked, checklistId = checklistId, itemId = itemId)
-                checklistDao.updateChecklistModifiedDateById(id = checklistId, date = Clock.System.now())
-            }
+            checklistItemDao.updateCheckedStateByIds(checked = isChecked, checklistId = checklistId, itemId = itemId)
+            checklistDao.updateChecklistModifiedDateById(id = checklistId, date = Clock.System.now())
         }
     }
 
     suspend fun updateChecklistItemTitle(itemId: Long, checklistId: Long, title: String) {
         withContext(NonCancellable) {
-            database.withTransaction {
-                checklistDao.updateChecklistModifiedDateById(id = checklistId, date = Clock.System.now())
-                checklistItemDao.updateTitleByIds(itemId = itemId, checklistId = checklistId, title = title)
-            }
+            checklistDao.updateChecklistModifiedDateById(id = checklistId, date = Clock.System.now())
+            checklistItemDao.updateTitleByIds(itemId = itemId, checklistId = checklistId, title = title)
         }
     }
 
     suspend fun deleteChecklistItem(itemId: Long, checklistId: Long) {
         withContext(NonCancellable) {
-            database.withTransaction {
-                checklistDao.updateChecklistModifiedDateById(id = checklistId, date = Clock.System.now())
-                checklistItemDao.deleteItem(itemId = itemId, checklistId = checklistId)
-                reorderItemPositions(checklistId = checklistId)
-            }
+            checklistDao.updateChecklistModifiedDateById(id = checklistId, date = Clock.System.now())
+            checklistItemDao.deleteItem(itemId = itemId, checklistId = checklistId)
+            reorderItemPositions(checklistId = checklistId)
         }
     }
 
     suspend fun permanentlyDelete(itemId: Long) {
         withContext(NonCancellable) {
-            database.withTransaction {
-                checklistItemDao.deleteItemsForChecklist(checklistId = itemId)
-                checklistDao.deleteChecklistById(checklistId = itemId)
-            }
+            checklistItemDao.deleteItemsForChecklist(checklistId = itemId)
+            checklistDao.deleteChecklistById(checklistId = itemId)
         }
     }
 
@@ -128,17 +115,15 @@ class ChecklistRepository @Inject constructor(
 
     suspend fun delete(checklists: List<Checklist>) {
         withContext(NonCancellable) {
-            database.withTransaction {
-                val items = checklists.flatMap { checklist ->
-                    checklist
-                        .items
-                        .map { item -> item.toEntity(checklist.id) }
-                }
-                checklistItemDao.deleteItems(items)
-
-                val checklistEntities = checklists.map(Checklist::toEntity)
-                checklistDao.deleteChecklists(checklistEntities)
+            val items = checklists.flatMap { checklist ->
+                checklist
+                    .items
+                    .map { item -> item.toEntity(checklist.id) }
             }
+            checklistItemDao.deleteItems(items)
+
+            val checklistEntities = checklists.map(Checklist::toEntity)
+            checklistDao.deleteChecklists(checklistEntities)
         }
     }
 
@@ -148,53 +133,47 @@ class ChecklistRepository @Inject constructor(
         itemToInsert: ChecklistItem,
     ) {
         withContext(NonCancellable) {
-            database.withTransaction {
-                val oldItems = checklistItemDao.getItemsForChecklist(checklistId = checklistId)
-                val itemBeforeIndex = oldItems.indexOfFirst { it.id == itemBefore }
-                val itemToSave = itemToInsert.copy(listPosition = itemBeforeIndex + 1)
+            val oldItems = checklistItemDao.getItemsForChecklist(checklistId = checklistId)
+            val itemBeforeIndex = oldItems.indexOfFirst { it.id == itemBefore }
+            val itemToSave = itemToInsert.copy(listPosition = itemBeforeIndex + 1)
 
-                if (itemBeforeIndex == oldItems.lastIndex) {
-                    saveChecklistItemAsLast(checklistId = checklistId, item = itemToSave)
-                    return@withTransaction
+            if (itemBeforeIndex == oldItems.lastIndex) {
+                saveChecklistItemAsLast(checklistId = checklistId, item = itemToSave)
+                return@withContext
+            }
+
+            val itemsAfterInsertion = oldItems
+                .subList(itemToSave.listPosition, oldItems.size)
+                .map { checklistItem ->
+                    checklistItem.copy(listPosition = checklistItem.listPosition + 1)
                 }
 
-                val itemsAfterInsertion = oldItems
-                    .subList(itemToSave.listPosition, oldItems.size)
-                    .map { checklistItem ->
-                        checklistItem.copy(listPosition = checklistItem.listPosition + 1)
-                    }
-
-                val allToInsert = itemsAfterInsertion + itemToSave.toEntity(checklistId)
-                checklistItemDao.insertChecklistItems(allToInsert)
-            }
+            val allToInsert = itemsAfterInsertion + itemToSave.toEntity(checklistId)
+            checklistItemDao.insertChecklistItems(allToInsert)
         }
     }
 
     suspend fun saveItemsNewOrder(checklistId: Long, orderedItemIds: List<Long>) {
         withContext(NonCancellable) {
-            database.withTransaction {
-                val dbUncheckedItems = checklistItemDao.getUncheckedItemsForChecklist(checklistId = checklistId)
-                if (orderedItemIds.size != dbUncheckedItems.size) {
-                    return@withTransaction
-                }
-                val orderedPositions = dbUncheckedItems.map { it.listPosition }.sorted()
-                val updatedCollection = List(orderedItemIds.size) { index ->
-                    val itemId = orderedItemIds[index]
-                    val dbItem = dbUncheckedItems.find { it.id == itemId }
-                    dbItem?.copy(listPosition = orderedPositions[index]) ?: error("Item with id=$itemId not found")
-                }
-                checklistItemDao.insertChecklistItems(updatedCollection)
+            val dbUncheckedItems = checklistItemDao.getUncheckedItemsForChecklist(checklistId = checklistId)
+            if (orderedItemIds.size != dbUncheckedItems.size) {
+                return@withContext
             }
+            val orderedPositions = dbUncheckedItems.map { it.listPosition }.sorted()
+            val updatedCollection = List(orderedItemIds.size) { index ->
+                val itemId = orderedItemIds[index]
+                val dbItem = dbUncheckedItems.find { it.id == itemId }
+                dbItem?.copy(listPosition = orderedPositions[index]) ?: error("Item with id=$itemId not found")
+            }
+            checklistItemDao.insertChecklistItems(updatedCollection)
         }
     }
 
     suspend fun moveToTrash(itemId: Long) {
         withContext(NonCancellable) {
-            database.withTransaction {
-                checklistDao.updateIsTrashedById(id = itemId, isTrashed = true)
-                checklistDao.updateTrashedDateById(id = itemId, date = Clock.System.now())
-                checklistDao.updatePinnedStateById(id = itemId, isPinned = false)
-            }
+            checklistDao.updateIsTrashedById(id = itemId, isTrashed = true)
+            checklistDao.updateTrashedDateById(id = itemId, date = Clock.System.now())
+            checklistDao.updatePinnedStateById(id = itemId, isPinned = false)
         }
     }
 
@@ -226,10 +205,8 @@ class ChecklistRepository @Inject constructor(
 
     private suspend fun restoreChecklist(checklistId: Long) {
         withContext(NonCancellable) {
-            database.withTransaction {
-                checklistDao.updateIsTrashedById(id = checklistId, isTrashed = false)
-                checklistDao.updateTrashedDateById(id = checklistId, date = null)
-            }
+            checklistDao.updateIsTrashedById(id = checklistId, isTrashed = false)
+            checklistDao.updateTrashedDateById(id = checklistId, date = null)
         }
     }
 

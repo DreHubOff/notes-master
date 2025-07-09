@@ -1,20 +1,21 @@
 import com.andres.notes.master.AndroidBuildDefaults
+import com.andres.notes.master.alias
 import com.andres.notes.master.androidLibrary
-import com.andres.notes.master.kotlin
-import com.andres.notes.master.library
+import com.andres.notes.master.kotlinMultiplatformExtension
 import com.andres.notes.master.libs
-import com.andres.notes.master.plugin
+import com.andres.notes.master.pluginManager
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.apply
 
 class KMPModuleConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
-            apply(plugin = libs.plugin("android-kotlin-multiplatform-library").pluginId)
-            apply(plugin = libs.plugin("kotlin-multiplatform").pluginId)
+            pluginManager {
+                alias(libs.plugins.android.kotlin.multiplatform.library)
+                alias(libs.plugins.kotlin.multiplatform)
+            }
 
-            kotlin {
+            kotlinMultiplatformExtension {
                 jvm()
                 androidLibrary {
                     compileSdk = AndroidBuildDefaults.COMPILE_SDK
@@ -41,7 +42,7 @@ class KMPModuleConventionPlugin : Plugin<Project> {
                 }
 
                 sourceSets.commonMain.dependencies {
-                    implementation(libs.library("kotlin.stdlib"))
+                    implementation(libs.kotlin.stdlib)
                 }
             }
         }

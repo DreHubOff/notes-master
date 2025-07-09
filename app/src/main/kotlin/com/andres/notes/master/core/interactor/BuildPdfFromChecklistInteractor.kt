@@ -14,10 +14,12 @@ import com.wwdablu.soumya.simplypdf.composers.properties.TextProperties
 import com.wwdablu.soumya.simplypdf.document.DocumentInfo
 import com.wwdablu.soumya.simplypdf.document.Margin
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.datetime.format
+import kotlinx.datetime.format.DateTimeComponents
+import kotlinx.datetime.format.Padding
+import kotlinx.datetime.format.char
 import java.io.File
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
-import kotlin.time.toJavaInstant
 
 class BuildPdfFromChecklistInteractor @Inject constructor(
     @param:ApplicationContext private val context: Context,
@@ -83,7 +85,19 @@ class BuildPdfFromChecklistInteractor @Inject constructor(
     }
 
     private fun buildPdfName(checklist: Checklist): String {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")
-        return "Checklist_${formatter.format(checklist.creationDate.toJavaInstant())}.pdf"
+        val formatter = DateTimeComponents.Format {
+            year()
+            char('-')
+            monthNumber(Padding.ZERO)
+            char('-')
+            day(Padding.ZERO)
+            char('_')
+            hour(Padding.ZERO)
+            char('-')
+            minute(Padding.ZERO)
+            char('-')
+            second(Padding.ZERO)
+        }
+        return "Checklist_${checklist.creationDate.format(formatter)}.pdf"
     }
 }

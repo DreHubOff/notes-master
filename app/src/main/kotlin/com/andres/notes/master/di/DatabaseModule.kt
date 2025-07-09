@@ -1,12 +1,12 @@
 package com.andres.notes.master.di
 
 import android.content.Context
-import androidx.room.Room
 import com.andres.notes.master.core.database.AppDatabase
-import com.andres.notes.master.core.database.AppDatabaseConstructor
 import com.andres.notes.master.core.database.dao.ChecklistDao
 import com.andres.notes.master.core.database.dao.ChecklistItemDao
 import com.andres.notes.master.core.database.dao.TextNoteDao
+import com.andres.notes.master.core.database.di.DatabaseBuilderProvider
+import com.andres.notes.master.core.database.di.buildDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,11 +21,7 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(
-            context,
-            name = AppDatabase.Companion.DB_NAME,
-            factory = AppDatabaseConstructor::initialize,
-        ).build()
+        return buildDatabase(DatabaseBuilderProvider(context))
     }
 
     @Provides
