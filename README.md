@@ -16,4 +16,4 @@ It’s now undergoing a major **refactor and modernization**, with the following
 
 <img src="demo/front_page.png" alt="Front page" width="400"/>
 
-[Short example]([demo/demo_video.webm](https://github.com/user-attachments/assets/4b05c860-702f-4d45-be01-1f5e545b35e1))
+Check a [demo](./demo/) folder for videos.
