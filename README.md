@@ -30,7 +30,7 @@ Originally developed as an MVP under tight deadlines, the app is currently under
 
 - 🌙 **Themes**
     - Supports **Light**, **Dark**, and **System Default** themes.
-    <img src="demo/theme_change.gif" alt="Theme change" style="max-width: 300px; width: 100%;">
+    <img src="./demo/theme_change.gif" alt="Theme change" style="max-width: 300px; width: 100%;">
 
 ---
 
