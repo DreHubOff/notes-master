@@ -68,12 +68,6 @@ including a **Kotlin Multiplatform** migration. The goal is to deliver a maintai
 
 ---
 
-## 🤝 Contributions
-
-Contributions and feedback are welcome! Feel free to open issues or submit PRs as the project evolves.
-
----
-
 ## 📄 License
 
 [MIT License](./LICENSE)
