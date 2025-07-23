@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -30,6 +31,7 @@ private data class SecondaryFAB(
     val icon: ImageVector,
     @param:StringRes val text: Int,
     @param:StringRes val description: Int,
+    val testTag: String,
     val clickAction: () -> Unit = {},
 )
 
@@ -45,12 +47,14 @@ fun MainFabContainer(
             icon = Icons.Rounded.CheckBox,
             text = R.string.fab_add_checklist,
             description = R.string.fab_add_checklist_desc,
+            testTag = "fabChecklist",
             clickAction = onAddChecklistClick,
         ),
         SecondaryFAB(
             icon = Icons.Sharp.ModeEdit,
             text = R.string.fab_add_note,
             description = R.string.fab_add_text_note_desc,
+            testTag = "fabTextNote",
             clickAction = onAddTextNoteClick,
         ),
     )
@@ -67,16 +71,15 @@ fun MainFabContainer(
             horizontalAlignment = Alignment.End,
             verticalArrangement = spacedBy(8.dp),
         ) {
-            secondaryFabs.forEachIndexed { index, (icon, text, description, action) ->
+            secondaryFabs.forEachIndexed { index, (icon, text, description, testTag, action) ->
                 AnimatedSecondaryFab(
                     visible = expanded,
                     icon = icon,
                     text = text,
                     description = description,
                     index = index,
-                    onClick = {
-                        action()
-                    }
+                    testTag = testTag,
+                    onClick = action,
                 )
             }
 
@@ -98,6 +101,7 @@ private fun AnimatedSecondaryFab(
     @StringRes description: Int,
     onClick: () -> Unit,
     index: Int,
+    testTag: String,
     startTranslationY: Dp = 180.dp,
     startTranslationX: Dp = 90.dp,
 ) {
@@ -134,6 +138,7 @@ private fun AnimatedSecondaryFab(
             description = description,
             onClick = onClick,
             modifier = Modifier
+                .testTag(testTag)
                 .graphicsLayer {
                     this.scaleX = scale
                     this.scaleY = scale

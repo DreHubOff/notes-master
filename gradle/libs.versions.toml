@@ -11,13 +11,15 @@ ksp = "2.2.0-2.0.2"
 coreKtx = "1.16.0"
 lifecycleRuntimeKtx = "2.9.0"
 activityCompose = "1.10.1"
-composeBom = "2025.06.01"
+composeBom = "2025.07.00"
+composeJunit4 = "1.8.3"
 materialIconsExtended = "1.7.8"
 navigationCompose = "2.9.0"
 room = "2.7.2"
 sqliteBundle = "2.5.2"
 reorderable = "2.4.3"
 simplypdf = "2.1.1"
+runner = "1.6.2"
 
 [libraries]
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
@@ -40,6 +42,7 @@ androidx-ui-text-google-fonts = { module = "androidx.compose.ui:ui-text-google-f
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref="composeJunit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 list-reorderable = { module = "sh.calvin.reorderable:reorderable", version.ref = "reorderable" }
 
@@ -51,6 +54,8 @@ androidx-sqlite = { group = "androidx.sqlite", name = "sqlite-bundled", version.
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
+hilt-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "dagger" }
+
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 simplypdf = { module = "com.github.wwdablu:SimplyPDF", version.ref = "simplypdf" }
 
@@ -58,6 +63,7 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "room" }
+androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

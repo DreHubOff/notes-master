@@ -28,6 +28,8 @@ android {
         buildConfigField("String", "FILE_PROVIDER_AUTHORITY", "\"${fileProviderAuthority}\"")
         manifestPlaceholders["fileProviderAuthority"] = fileProviderAuthority
         buildConfigField("int", "TRASH_ITEM_MAX_LIFETIME_SECONDS", "60 * 60 * 24 * 7") // 7 days
+
+        testInstrumentationRunner = "com.andres.notes.master.HiltTestRunner"
     }
 
     buildTypes {
@@ -54,6 +56,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.ui)
@@ -62,8 +65,10 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons.core)
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.runner)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
@@ -74,6 +79,8 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.dagger.compiler)
     ksp(libs.hilt.compiler)
+    androidTestImplementation(libs.hilt.testing)
+    kspAndroidTest(libs.hilt.compiler)
 
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)

@@ -3,11 +3,10 @@ package com.andres.notes.master
 import android.app.Application
 import android.util.Log
 import com.andres.notes.master.data.FileManagerRepository
+import com.andres.notes.master.di.qualifier.ApplicationGlobalScope
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Provider
@@ -19,11 +18,9 @@ private val TAG = RootApplication::class.simpleName
 @HiltAndroidApp
 class RootApplication : Application() {
 
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Log.e(TAG, "Uncaught exception", throwable)
-    }
-
-    val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Default + coroutineExceptionHandler)
+    @Inject
+    @ApplicationGlobalScope
+    lateinit var applicationScope: CoroutineScope
 
     @Inject
     lateinit var fileManagerRepository: Provider<FileManagerRepository>
